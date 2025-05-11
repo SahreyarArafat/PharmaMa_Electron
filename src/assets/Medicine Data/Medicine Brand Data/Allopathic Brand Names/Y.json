@@ -1,0 +1,72 @@
+[
+  {
+    "page_url": "https://medex.com.bd/brands?alpha=y&page=1",
+    "serialNumber": 1,
+    "medicinePackImage": "https://medex.com.bd/storage/images/packaging/yamadin-20-mg-tablet-83492212327-i1-JtZzLFPcwYiCKyZhkXyF.webp",
+    "brandName": "Yamadin",
+    "dosageform": "Tablet",
+    "genericName": "Famotidine",
+    "strength": "20 mg",
+    "manufacturer": "Beximco Pharmaceuticals Ltd.",
+    "marketer": "",
+    "unitPrice": "1.90\n        \n                    \n\n                (20 x 10: ৳ 380.00)\n            \n        \n                    \n                Strip Price:\n                ৳ 19.00"
+  },
+  {
+    "page_url": "https://medex.com.bd/brands?alpha=y&page=1",
+    "serialNumber": 2,
+    "medicinePackImage": "https://medex.com.bd/storage/images/packaging/yamadin-40-mg-tablet-4587811522-i1-FeuJq46v2ybexL9j9seL.webp",
+    "brandName": "Yamadin",
+    "dosageform": "Tablet",
+    "genericName": "Famotidine",
+    "strength": "40 mg",
+    "manufacturer": "Beximco Pharmaceuticals Ltd.",
+    "marketer": "",
+    "unitPrice": "3.82\n        \n                    \n\n                (10 x 10: ৳ 382.00)\n            \n        \n                    \n                Strip Price:\n                ৳ 38.20"
+  },
+  {
+    "page_url": "https://medex.com.bd/brands?alpha=y&page=1",
+    "serialNumber": 3,
+    "brandName": "Yogra",
+    "dosageform": "Tablet",
+    "genericName": "Sildenafil Citrate",
+    "strength": "50 mg",
+    "manufacturer": "The White Horse Pharmaceuticals Ltd.",
+    "marketer": "",
+    "unitPrice": "30.00\n        \n                    \n\n                (10's pack: ৳ 300.00)"
+  },
+  {
+    "page_url": "https://medex.com.bd/brands?alpha=y&page=1",
+    "serialNumber": 4,
+    "brandName": "Yogra",
+    "dosageform": "Tablet",
+    "genericName": "Sildenafil Citrate",
+    "strength": "100 mg",
+    "manufacturer": "The White Horse Pharmaceuticals Ltd.",
+    "marketer": "",
+    "unitPrice": "50.00\n        \n                    \n\n                (10's pack: ৳ 500.00)"
+  },
+  {
+    "page_url": "https://medex.com.bd/brands?alpha=y&page=1",
+    "serialNumber": 5,
+    "medicinePackImage": "https://medex.com.bd/storage/images/packaging/yonex-45-miu-injection-47536361995-i1-Th7wJ1BbRYN7ZU94nlVx.webp",
+    "brandName": "Yonex",
+    "dosageform": "IM/IV Injection",
+    "genericName": "Colistimethate Sodium",
+    "strength": "4.5 MIU (150 mg)",
+    "manufacturer": "Healthcare Pharmaceuticals Ltd.",
+    "marketer": "",
+    "unitPrice": "4.5 MIU vial:\n                            \n             1,000.00"
+  },
+  {
+    "page_url": "https://medex.com.bd/brands?alpha=y&page=1",
+    "serialNumber": 6,
+    "medicinePackImage": "https://medex.com.bd/storage/images/packaging/yulipris-5-mg-tablet-745050604-i1-amk1MOwozWFecxVLYaxx.webp",
+    "brandName": "Yulipris",
+    "dosageform": "Tablet",
+    "genericName": "Ulipristal Acetate [For uterine fibroids]",
+    "strength": "5 mg",
+    "manufacturer": "Healthcare Pharmaceuticals Ltd.",
+    "marketer": "",
+    "unitPrice": "55.00\n        \n                    \n\n                (2 x 10: ৳ 1,100.00)\n            \n        \n                    \n                Strip Price:\n                ৳ 550.00"
+  }
+]

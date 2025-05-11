@@ -1,0 +1,119 @@
+.navbarMainContainer {
+  min-width: 200px;
+  width: 200px;
+  height: calc(100vh - 50px);
+  overflow-y: auto;
+  position: fixed;
+  background: white;
+  z-index: 10000000000;
+  /* top: 50px; */
+}
+
+.navItemsContainer {
+  margin: 0 10px 10px;
+}
+
+.navItem {
+  cursor: pointer;
+  color: gray;
+  padding: 10px;
+  margin: 8px 0 0;
+  border-radius: 5px;
+  background: rgba(211, 211, 211, 0.308);
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.activeNavItem {
+  color: white;
+  background: #a3aeb9;
+  box-shadow: 0px 6px 7px -4px rgba(148, 148, 148, 0.74);
+}
+
+.navTitle {
+  margin: 0;
+}
+
+.navIcon {
+  height: 20px;
+  font-size: 20px;
+  margin-right: 8px;
+}
+
+.dropdownarrowIcon {
+  display: flex;
+  width: 100%;
+  justify-content: end;
+  align-items: center;
+}
+
+/* //////////// */
+
+.navItemWrapper {
+  /* position: relative; */
+}
+
+.dropdownMenu {
+  background-color: #fff;
+  /* border: 1px solid #cccccc8c; */
+  box-shadow: 5px 6px 7px -4px rgba(148, 148, 148, 0.74);
+  border-radius: 0px 0px 5px 5px;
+  background: rgba(211, 211, 211, 0.308);
+  margin-left: 15px;
+}
+
+.dropdownItem {
+  display: block;
+  padding: 0px 0px;
+  cursor: pointer;
+  color: gray;
+  text-decoration: none;
+  position: relative;
+  left: 0;
+  border-left: 5px double rgba(121, 121, 121, 0.685);
+  transition: all 0.3s;
+  margin-top: 2px;
+}
+
+.dropdownItem:before {
+  content: "";
+  position: absolute;
+  width: calc(100% - 5px);
+  height: 100%;
+  background: #fa1130a6;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: 0.5s;
+}
+
+.dropdownItem:hover {
+  left: 6px;
+}
+
+.dropdownItem span {
+  position: relative;
+  padding: 8px;
+  padding-left: 12px;
+  display: inline-block;
+  z-index: 1;
+  transition: 0.5s;
+}
+
+.dropdownItem:hover span {
+  color: white;
+}
+
+.dropdownItem:hover:before {
+  transform: scaleX(1);
+}
+
+.activeDropdownItem {
+  left: 6px;
+  color: white;
+}
+
+.activeDropdownItem:before {
+  background: #fa1130a6;
+  transform: scaleX(1);
+}

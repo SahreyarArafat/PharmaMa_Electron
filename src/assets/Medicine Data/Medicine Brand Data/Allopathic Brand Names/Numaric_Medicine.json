@@ -1,0 +1,162 @@
+[
+    {
+        "page_url": "https://medex.com.bd/brands?page=1",
+        "serialNumber": 1,
+        "brandName": "3 Bion",
+        "dosageform": "Tablet",
+        "genericName": "Vitamin B1, B6 & B12",
+        "strength": "100 mg+200 mg+200 mcg",
+        "manufacturer": "Jenphar Bangladesh Ltd.",
+        "unitPrice": "10.00\n        \n                    \n\n                (6 x 10: ৳ 600.00)"
+    },
+    {
+        "page_url": "https://medex.com.bd/brands?page=1",
+        "serialNumber": 2,
+        "brandName": "3-C",
+        "dosageform": "Capsule",
+        "genericName": "Cefixime Trihydrate",
+        "strength": "200 mg",
+        "manufacturer": "Edruc Limited",
+        "unitPrice": "35.00\n        \n                    \n\n                (12's pack: ৳ 420.00)"
+    },
+    {
+        "page_url": "https://medex.com.bd/brands?page=1",
+        "serialNumber": 3,
+        "brandName": "3-C",
+        "dosageform": "Powder for Suspension",
+        "genericName": "Cefixime Trihydrate",
+        "strength": "100 mg/5 ml",
+        "manufacturer": "Edruc Limited",
+        "unitPrice": "100 ml bottle:\n                         195.00"
+    },
+    {
+        "page_url": "https://medex.com.bd/brands?page=1",
+        "serialNumber": 4,
+        "brandName": "3-C",
+        "dosageform": "Capsule",
+        "genericName": "Cefixime Trihydrate",
+        "strength": "400 mg",
+        "manufacturer": "Edruc Limited",
+        "unitPrice": "48.00\n        \n                    \n\n                (4's pack: ৳ 192.00)"
+    },
+    {
+        "page_url": "https://medex.com.bd/brands?page=1",
+        "serialNumber": 5,
+        "brandName": "3-F",
+        "dosageform": "Tablet",
+        "genericName": "Levofloxacin Hemihydrate",
+        "strength": "500 mg",
+        "manufacturer": "Edruc Limited",
+        "unitPrice": "14.00\n        \n                    \n\n                (20's pack: ৳ 280.00)"
+    },
+    {
+        "page_url": "https://medex.com.bd/brands?page=1",
+        "serialNumber": 6,
+        "brandName": "3-Geocef",
+        "dosageform": "Capsule",
+        "genericName": "Cefixime Trihydrate",
+        "strength": "200 mg",
+        "manufacturer": "Hallmark Pharmaceuticals Ltd.",
+        "unitPrice": "30.00\n        \n                    \n\n                (12's pack: ৳ 360.00)"
+    },
+    {
+        "page_url": "https://medex.com.bd/brands?page=1",
+        "serialNumber": 7,
+        "brandName": "3-Geocef",
+        "dosageform": "Powder for Suspension",
+        "genericName": "Cefixime Trihydrate",
+        "strength": "100 mg/5 ml",
+        "manufacturer": "Hallmark Pharmaceuticals Ltd.",
+        "unitPrice": "50 ml bottle:\n                         175.00"
+    },
+    {
+        "page_url": "https://medex.com.bd/brands?page=1",
+        "serialNumber": 8,
+        "brandName": "3D",
+        "dosageform": "Capsule",
+        "genericName": "Cholecalciferol [Vitamin D3]",
+        "strength": "20000 IU",
+        "manufacturer": "Jenphar Bangladesh Ltd.",
+        "unitPrice": "20.00\n        \n                    \n\n                (1 x 10: ৳ 200.00)"
+    },
+    {
+        "page_url": "https://medex.com.bd/brands?page=1",
+        "serialNumber": 9,
+        "brandName": "3D",
+        "dosageform": "Capsule",
+        "genericName": "Cholecalciferol [Vitamin D3]",
+        "strength": "40000 IU",
+        "manufacturer": "Jenphar Bangladesh Ltd.",
+        "unitPrice": "35.00\n        \n                    \n\n                (1 x 7: ৳ 245.00)"
+    },
+    {
+        "page_url": "https://medex.com.bd/brands?page=1",
+        "serialNumber": 10,
+        "brandName": "3D",
+        "dosageform": "Tablet",
+        "genericName": "Cholecalciferol [Vitamin D3]",
+        "strength": "2000 IU",
+        "manufacturer": "Jenphar Bangladesh Ltd.",
+        "unitPrice": "2.50\n        \n                    \n\n                (3 x 10: ৳ 75.00)"
+    },
+    {
+        "page_url": "https://medex.com.bd/brands?page=1",
+        "serialNumber": 11,
+        "brandName": "3RD Cef",
+        "dosageform": "Tablet",
+        "genericName": "Cefixime Trihydrate",
+        "strength": "200 mg",
+        "manufacturer": "Medimet Pharmaceuticals Ltd.",
+        "unitPrice": "27.00\n        \n                    \n\n                (4's pack: ৳ 108.00)"
+    },
+    {
+        "page_url": "https://medex.com.bd/brands?page=1",
+        "serialNumber": 12,
+        "brandName": "3RD Cef",
+        "dosageform": "Tablet",
+        "genericName": "Cefixime Trihydrate",
+        "strength": "400 mg",
+        "manufacturer": "Medimet Pharmaceuticals Ltd.",
+        "unitPrice": "50.00\n        \n                    \n\n                (4's pack: ৳ 200.00)"
+    },
+    {
+        "page_url": "https://medex.com.bd/brands?page=1",
+        "serialNumber": 13,
+        "brandName": "3RD Cef",
+        "dosageform": "Powder for Suspension",
+        "genericName": "Cefixime Trihydrate",
+        "strength": "100 mg/5 ml",
+        "manufacturer": "Medimet Pharmaceuticals Ltd.",
+        "unitPrice": "37.5 ml bottle:\n                         130.00\n        \n            \n                                    50 ml bottle:\n                        ৳ 160.00"
+    },
+    {
+        "page_url": "https://medex.com.bd/brands?page=1",
+        "serialNumber": 14,
+        "brandName": "5 FU PhaRes",
+        "dosageform": "IV Injection or Infusion",
+        "genericName": "Fluorouracil",
+        "strength": "25 mg/ml",
+        "manufacturer": "Pharma Resources",
+        "unitPrice": "500 mg vial:\n                         457.00"
+    },
+    {
+        "page_url": "https://medex.com.bd/brands?page=1",
+        "serialNumber": 15,
+        "brandName": "5-Fluril",
+        "dosageform": "IV Injection or Infusion",
+        "genericName": "Fluorouracil",
+        "strength": "25 mg/ml",
+        "manufacturer": "Techno Drugs Ltd.",
+        "unitPrice": "250 mg vial:\n                         55.00\n        \n            \n                                    500 mg vial:\n                        ৳ 95.00"
+    },
+    {
+        "page_url": "https://medex.com.bd/brands?page=1",
+        "serialNumber": 16,
+        "brandName": "5X",
+        "dosageform": "Tablet",
+        "genericName": "Ulipristal Acetate [For emergency contraception]",
+        "strength": "30 mg",
+        "manufacturer": "Renata Limited",
+        "unitPrice": "1 tablet pack:\n                         200.00"
+    }
+]

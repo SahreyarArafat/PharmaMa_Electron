@@ -1,0 +1,135 @@
+.topbarContainer {
+  height: 50px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000000;
+  background: white;
+  /* box-shadow: 0px 6px 10px -5px rgba(0, 0, 0, 0.3); */
+}
+
+.topbarLeft {
+  flex: 3;
+}
+
+.topbarCompanyLogoImgContainer {
+  margin-left: 30px;
+  height: 35px;
+  width: fit-content;
+  background-color: rgba(248, 248, 240, 0);
+  border-radius: 5px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.topbarCompanyLogoImgContainer img {
+  height: 100%;
+  width: auto;
+}
+
+.topbarCenter {
+  flex: 6;
+}
+
+.topbarRight {
+  flex: 3.5;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  margin-right: 30px;
+  color: gray;
+}
+
+.topbarIcons {
+  display: flex;
+}
+
+.topbarIconItem {
+  cursor: pointer;
+  position: relative;
+}
+
+.topbarIcon {
+  font-size: 22px;
+}
+
+.topbarIconBadge {
+  font-size: 11px;
+  width: 14px;
+  height: 14px;
+  background: red;
+  border-radius: 50%;
+  color: white;
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.topbarProfile_IconDevider {
+  height: 20px;
+  width: 2px;
+  border-radius: 30%;
+  background: gray;
+  margin: 0px 20px;
+}
+
+.topbarProfileContainer {
+  display: flex;
+  align-items: center;
+}
+
+.topbarProfileImgContainer {
+  height: 34px;
+  width: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.topbarProfileImgContainer img {
+  height: 100%;
+  width: 100%;
+}
+
+.topbarProfileIntro {
+  margin-left: 5px;
+}
+
+.topbarProfileIntro p {
+  margin: 0;
+}
+
+.topbarProfileIntro .profileName {
+  font-size: 14px;
+  letter-spacing: 0.4px;
+  font-weight: 600;
+  max-width: 100px;
+  /* Adjust the width as per your layout */
+  white-space: nowrap;
+  /* Prevent text from wrapping */
+  overflow: hidden;
+  /* Hide overflowed text */
+  text-overflow: ellipsis;
+  /* Show ellipsis (three dots) */
+}
+
+.topbarProfileIntro .profileDesignation {
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  position: relative;
+  /* font-weight: 600; */
+}
+
+.profileDetailArrow {
+  cursor: pointer;
+  color: black;
+  font-size: 18px;
+  font-weight: 800;
+  position: absolute;
+  right: 5px;
+}

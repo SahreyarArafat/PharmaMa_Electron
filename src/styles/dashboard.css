@@ -1,0 +1,153 @@
+.shortcutLinkContainer {
+  width: fit-content;
+  display: flex;
+  overflow-x: auto;
+  /* flex-wrap: wrap; */
+  /* justify-content: center; */
+}
+
+.shortcutLink {
+  width: fit-content;
+  margin: 6px;
+  border-radius: 10px;
+  padding: 4px 6px;
+  box-shadow: 0px 6px 7px -2px rgba(148, 148, 148, 0.247);
+  background: white;
+  cursor: pointer;
+}
+
+.shortcutLinkContent {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.shortcutLinkIcon {
+  margin: 0px 5px 0px 0px;
+  padding: 5px;
+  color: white;
+  border-radius: 50%;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shortcutLinkIcon_1 {
+  background: rgb(124, 177, 255);
+}
+.shortcutLinkIcon_2 {
+  background: rgb(61, 241, 121);
+}
+.shortcutLinkIcon_3 {
+  background: rgb(218, 214, 20);
+}
+.shortcutLinkIcon_4 {
+  background: rgb(230, 78, 123);
+}
+
+.shortcutLinkText p {
+  margin: 0px;
+  font-size: 12px;
+  /* letter-spacing: 0px; */
+}
+
+/*  */
+
+.overviewCardsContainer {
+  /* width: fit-content; */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+.overviewCard {
+  /* height: 150px; */
+  min-width: 250px;
+  /* width: 22.5%; */
+  width: calc((100% / 4) - 40px);
+  /* width: calc((100% / 4) - 60px); */
+
+  margin: 10px;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0px 6px 7px -2px rgba(148, 148, 148, 0.74);
+  background: white;
+}
+
+.overviewCardContent {
+  display: flex;
+  align-items: center;
+  padding: 4px 10px 0px;
+}
+
+.overviewCardIcon {
+  margin: 0px 15px 0px 0px;
+  padding: 18px;
+  color: white;
+  border-radius: 50%;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overviewCardIcon_1 {
+  background: rgb(124, 177, 255);
+}
+.overviewCardIcon_2 {
+  background: rgb(61, 241, 121);
+}
+.overviewCardIcon_3 {
+  background: rgb(218, 214, 20);
+}
+.overviewCardIcon_4 {
+  background: rgb(230, 78, 123);
+}
+
+.overviewCardText {
+}
+
+.overviewCardText h4 {
+  margin: 0px;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+}
+
+.overviewCardText h2 {
+  margin: 5px 0 0 0;
+  font-size: 36px;
+}
+
+.cardDetailLink {
+  cursor: pointer;
+  padding: 0 10px;
+  margin-top: 15px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.7px;
+  color: rgb(0, 127, 231);
+  display: flex;
+  justify-content: end;
+  /* transform: translateY(-10px); */
+}
+
+.shortGraphContainer {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.shortGraph {
+  height: 300px;
+  min-width: 350px;
+  /* width: 30.8%; */
+  width: calc((100% / 3) - 40px);
+  margin: 10px;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0px 6px 7px -2px rgba(148, 148, 148, 0.74);
+  background: white;
+}

@@ -1,0 +1,38 @@
+.newSaleContainer {
+  padding: 20px;
+}
+
+.customerSection,
+.productSection,
+.cartSection,
+.paymentSection {
+  margin-bottom: 20px;
+}
+
+.customerList,
+.productList {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.customerItem,
+.productItem {
+  margin: 5px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.customerItem.selected {
+  background-color: #d3f4ff;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 10px;
+  border: 1px solid #ccc;
+}

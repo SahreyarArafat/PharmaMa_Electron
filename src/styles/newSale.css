@@ -1,0 +1,413 @@
+.newSaleContainer {
+}
+
+.newSaleContainer .pageHeader {
+  padding: 0px 10px;
+  background: rgb(30, 179, 154);
+  color: #fafafa;
+  margin-bottom: 10px;
+}
+
+.medicineSearchContainer {
+  position: relative;
+}
+
+.search_result_header {
+  font-size: 18px;
+  font-weight: 400;
+  margin: 15px 0px;
+  text-align: center;
+}
+
+.filteredList {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  background: white;
+  border-radius: 3px;
+  padding: 10px;
+  width: 100%;
+  z-index: 10;
+}
+
+.search_results_container {
+  margin: 0px auto;
+}
+
+.search_result_item {
+  border-bottom: 2px solid #fafafa;
+  padding: 5px 8px 8px;
+  background: rgb(210, 240, 233);
+}
+
+.search_result_header_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stock_status {
+  font-size: 12px;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: rgb(24, 199, 24);
+  color: rgb(255, 255, 255);
+}
+
+.add_btn {
+  background: rgba(221, 221, 73, 0.801);
+  color: rgb(255, 255, 255);
+  padding: 4px 5px;
+  border-radius: 5px;
+  outline: 0;
+  border: 0;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0px 2px 2px lightgray;
+  transform: scale(1);
+  transition: ease all 0.25s;
+}
+
+.add_btn:hover {
+  background: rgba(197, 197, 68, 0.801);
+}
+
+.add_btn:active {
+  transform: scale(0.95);
+}
+
+.search_result_title_container {
+  display: flex;
+  align-items: center;
+}
+
+.medicine_dosage_icon {
+  height: 20px;
+  margin: 0px 3px;
+}
+
+.medicine_dosage_icon img {
+  height: 100%;
+  width: auto;
+}
+
+.brandName {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.strength {
+  font-size: 16px;
+  font-weight: 500;
+  color: #606060;
+}
+
+.dosageform {
+  font-size: 12px;
+  font-weight: 400;
+  color: #606060;
+  margin-left: 5px;
+}
+
+.genericName {
+  font-size: 14px;
+  font-weight: 500;
+  margin-left: 6px;
+  color: rgb(160, 106, 95);
+  display: flex;
+  align-items: center;
+}
+
+.medicineType {
+  font-size: 12px;
+  font-weight: 400;
+  color: rgb(14, 172, 35);
+  margin-left: 5px;
+}
+
+.manufacturer {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+  margin-left: 6px;
+  color: rgb(15, 67, 92);
+}
+
+/* ////////////////////////////////////// */
+
+.sectionHeader {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.cartedProductContainer {
+  margin: 10px 0px 0px;
+  padding: 10px;
+  background: white;
+  border-radius: 5px;
+}
+
+.cartedProductBG {
+  /* margin: 10px 0px; */
+  padding: 10px;
+  background: rgb(240, 240, 240);
+  border-radius: 3px;
+}
+
+table {
+  border-collapse: separate;
+  /* background: rgb(255, 255, 255); */
+  border-radius: 5px !important;
+}
+thead {
+  background: rgb(240, 240, 240);
+}
+.productInfo .dosageform {
+  display: block;
+  margin: 0;
+}
+.productInfo .brandName {
+  font-size: 20px;
+  margin-right: 2px;
+}
+.productInfo .strength {
+  font-size: 14px;
+  word-spacing: -2px;
+}
+
+.quantityContainer,
+.unitPriceContainer {
+  /* margin: 0; */
+  padding: 0 10px;
+}
+.quantityInput,
+.unitPriceInput {
+  height: 100%;
+  width: 100%;
+  padding: 10px 10px;
+  font-size: 18px;
+  font-weight: 500;
+  border: none;
+  text-align: center;
+  border-radius: 3px;
+}
+
+.discountContainer {
+  padding: 0 10px;
+}
+.discountSelect {
+  height: 100%;
+  width: 100%;
+  padding: 10px 10px;
+  font-size: 18px;
+  font-weight: 500;
+  border: none;
+  border-radius: 3px;
+}
+
+.totalPrice_RemoveContainer {
+  margin: 0;
+  padding: 0 10px;
+  position: relative;
+}
+.removeBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 22px;
+  width: 22px;
+  cursor: pointer;
+  background: rgb(245, 50, 50);
+  border: none;
+  border-radius: 0px 0 0px 5px;
+  /* outline-color: tomato; */
+  /* border-inline-color: tomato; */
+}
+.removeIcon {
+  font-size: 18px;
+  color: white;
+}
+.totalPrice {
+  padding: 10px 10px;
+  display: flex;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 500;
+  min-width: 110px;
+}
+
+/* /////////////////////////////////// */
+
+.customer_payment_billing_container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.customerInfoSection {
+  min-width: 400px;
+  width: calc(100% / 3 - 10px);
+  background: white;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0px 0px;
+}
+
+@media (min-width: 1124px) and (max-width: 1540px) {
+}
+
+.customerInfoBG {
+  background: rgb(240, 240, 240);
+  padding: 10px;
+  border-radius: 3px;
+}
+
+.customerNumberContainer,
+.customerNameContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+}
+.customerInfoSection label {
+  font-size: 14px;
+  font-weight: 500;
+}
+/* Chrome, Safari, Edge, Opera */
+.customerNumberContainer input::-webkit-outer-spin-button,
+.customerNumberContainer input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+.customerNumberContainer input[type="number"] {
+  -moz-appearance: textfield;
+}
+.customerInfoSection input {
+  padding: 4px;
+  margin-top: 2px;
+  font-size: 18px;
+  border-width: 0 0 2px 2px;
+  border-color: lightgray;
+  outline: none;
+  transition: border-color 0.3s linear;
+}
+.customerInfoSection input:focus {
+  border-color: rgb(30, 179, 154);
+}
+
+/* -------------------  --------------------- */
+
+.payablePriceDetailContainer {
+  min-width: 400px;
+  width: calc(100% / 3 - 20px);
+  background: white;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 20px 0px;
+}
+
+.payablePriceDetailBG {
+  background: rgb(240, 240, 240);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.paymentAmount {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 5px;
+}
+
+.amountDetail {
+}
+
+.amount {
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.totalPayableAmount {
+  padding: 5px 0px;
+  border-top: 2px dashed white;
+}
+
+.payablePriceDetailBG p {
+  display: flex;
+  justify-content: space-evenly;
+  background: white;
+
+  padding: 5px 5px;
+  border-radius: 3px;
+  font-weight: 400;
+  font-size: 16px;
+}
+/* --------------- */
+
+.billingInfoSection {
+  min-width: 400px;
+  width: calc(100% / 3 - 10px);
+  background: white;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0px 0px;
+}
+
+.billingInfoBG {
+  background: rgb(240, 240, 240);
+  padding: 10px;
+  border-radius: 3px;
+}
+
+.counterSelectContainer,
+.billSelectContainer,
+.serveDetailContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+}
+
+.billingInfoSection label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.billingInfoSection select,
+.billingInfoSection input {
+  padding: 4px;
+  margin-top: 2px;
+  font-size: 18px;
+  border-width: 0 0 2px 2px;
+  border-color: lightgray;
+  outline: none;
+  transition: border-color 0.3s linear;
+}
+.billingInfoSection select:focus,
+.billingInfoSection input:focus {
+  border-color: rgb(30, 179, 154);
+}
+
+.billingInfoSection select {
+  font-size: 16px;
+}
+
+/* ------------- */
+
+.submitSaleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+}
+
+.submitSaleContainer button {
+  width: 50%;
+  padding: 8px;
+  background: rgb(30, 179, 154);
+  color: #fafafa;
+  font-weight: 600;
+  font-size: 18px;
+  border: 2px solid white;
+  letter-spacing: 0.5px;
+  border-radius: 5px;
+}
