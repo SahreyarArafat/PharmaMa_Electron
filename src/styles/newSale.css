@@ -1,5 +1,4 @@
-.newSaleContainer {
-}
+.newSaleContainer {}
 
 .newSaleContainer .pageHeader {
   padding: 0px 10px;
@@ -159,17 +158,21 @@ table {
   /* background: rgb(255, 255, 255); */
   border-radius: 5px !important;
 }
+
 thead {
   background: rgb(240, 240, 240);
 }
+
 .productInfo .dosageform {
   display: block;
   margin: 0;
 }
+
 .productInfo .brandName {
   font-size: 20px;
   margin-right: 2px;
 }
+
 .productInfo .strength {
   font-size: 14px;
   word-spacing: -2px;
@@ -180,6 +183,7 @@ thead {
   /* margin: 0; */
   padding: 0 10px;
 }
+
 .quantityInput,
 .unitPriceInput {
   height: 100%;
@@ -195,6 +199,7 @@ thead {
 .discountContainer {
   padding: 0 10px;
 }
+
 .discountSelect {
   height: 100%;
   width: 100%;
@@ -210,6 +215,7 @@ thead {
   padding: 0 10px;
   position: relative;
 }
+
 .removeBtn {
   position: absolute;
   top: 0;
@@ -223,10 +229,12 @@ thead {
   /* outline-color: tomato; */
   /* border-inline-color: tomato; */
 }
+
 .removeIcon {
   font-size: 18px;
   color: white;
 }
+
 .totalPrice {
   padding: 10px 10px;
   display: flex;
@@ -253,8 +261,7 @@ thead {
   margin: 10px 0px 0px;
 }
 
-@media (min-width: 1124px) and (max-width: 1540px) {
-}
+@media (min-width: 1124px) and (max-width: 1540px) {}
 
 .customerInfoBG {
   background: rgb(240, 240, 240);
@@ -268,20 +275,24 @@ thead {
   flex-direction: column;
   margin: 10px 0;
 }
+
 .customerInfoSection label {
   font-size: 14px;
   font-weight: 500;
 }
+
 /* Chrome, Safari, Edge, Opera */
 .customerNumberContainer input::-webkit-outer-spin-button,
 .customerNumberContainer input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
 /* Firefox */
 .customerNumberContainer input[type="number"] {
   -moz-appearance: textfield;
 }
+
 .customerInfoSection input {
   padding: 4px;
   margin-top: 2px;
@@ -291,6 +302,7 @@ thead {
   outline: none;
   transition: border-color 0.3s linear;
 }
+
 .customerInfoSection input:focus {
   border-color: rgb(30, 179, 154);
 }
@@ -319,8 +331,7 @@ thead {
   margin: 5px;
 }
 
-.amountDetail {
-}
+.amountDetail {}
 
 .amount {
   font-weight: 500;
@@ -342,6 +353,7 @@ thead {
   font-weight: 400;
   font-size: 16px;
 }
+
 /* --------------- */
 
 .billingInfoSection {
@@ -360,36 +372,68 @@ thead {
 }
 
 .counterSelectContainer,
-.billSelectContainer,
-.serveDetailContainer {
+.billSelectContainer {
   display: flex;
   flex-direction: column;
   margin: 10px 0;
 }
 
-.billingInfoSection label {
-  font-size: 14px;
-  font-weight: 500;
+.cashDetailContainer {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
 }
 
-.billingInfoSection select,
-.billingInfoSection input {
-  padding: 4px;
+.cashDetailContainer .recevedCashAmountContainer,
+.cashDetailContainer .returnCashAmountContainer {
+  width: calc(50% - 6px);
+
+}
+
+.cashDetailContainer input {
+  width: 100%;
   margin-top: 2px;
+  padding: 4px;
   font-size: 18px;
   border-width: 0 0 2px 2px;
   border-color: lightgray;
   outline: none;
   transition: border-color 0.3s linear;
 }
+
+/* src/index.css or a global stylesheet */
+.cashDetailContainer input[type="number"]::-webkit-inner-spin-button,
+.cashDetailContainer input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.cashDetailContainer input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+
+.billingInfoSection label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.billingInfoSection select {
+  padding: 4px;
+  margin-top: 2px;
+  font-size: 16px;
+  border-width: 0 0 2px 2px;
+  border-color: lightgray;
+  outline: none;
+  transition: border-color 0.3s linear;
+}
+
 .billingInfoSection select:focus,
 .billingInfoSection input:focus {
   border-color: rgb(30, 179, 154);
 }
 
-.billingInfoSection select {
-  font-size: 16px;
-}
+
 
 /* ------------- */
 

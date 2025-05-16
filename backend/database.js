@@ -176,21 +176,18 @@ const connectCloudDB = async () => {
     console.log("✅ Cloud MongoDB Connected!");
   } catch (error) {
     console.error("❌ MongoDB Connection Error (Cloud):", error);
-    process.exit(1);
   }
 };
 
 const connectLocalDB = async () => {
   try {
     await local_client.connect();
-    console.log("✅ Local MongoDB Connected!");
-
     local_db = local_client.db("pharmama"); // Your local database
     await local_db.collection("invoices").createIndex({ synced: 1 });
-    return local_db;
+    console.log("✅ Local MongoDB Connected!");
+    // return local_db;
   } catch (error) {
     console.error("❌ MongoDB Connection Error (Local):", error);
-    process.exit(1);
   }
 };
 
