@@ -80,7 +80,7 @@ app.whenReady().then(async () => {
     createWindow();
 
     // Sync invoices in every `second * minute * mili-second`
-    setInterval(syncInvoices, 60 * 5 * 1000);
+    setInterval(syncInvoices, 60 * 30 * 1000);
   } catch (error) {
     console.error("❌ Failed to start backend:", error);
   }

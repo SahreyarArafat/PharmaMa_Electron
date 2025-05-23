@@ -1,4 +1,5 @@
-.newSaleContainer {}
+.newSaleContainer {
+}
 
 .newSaleContainer .pageHeader {
   padding: 0px 10px;
@@ -261,7 +262,8 @@ thead {
   margin: 10px 0px 0px;
 }
 
-@media (min-width: 1124px) and (max-width: 1540px) {}
+@media (min-width: 1124px) and (max-width: 1540px) {
+}
 
 .customerInfoBG {
   background: rgb(240, 240, 240);
@@ -331,7 +333,8 @@ thead {
   margin: 5px;
 }
 
-.amountDetail {}
+.amountDetail {
+}
 
 .amount {
   font-weight: 500;
@@ -384,10 +387,9 @@ thead {
   margin: 10px 0;
 }
 
-.cashDetailContainer .recevedCashAmountContainer,
+.cashDetailContainer .receivedCashAmountContainer,
 .cashDetailContainer .returnCashAmountContainer {
   width: calc(50% - 6px);
-
 }
 
 .cashDetailContainer input {
@@ -412,7 +414,6 @@ thead {
   -moz-appearance: textfield;
 }
 
-
 .billingInfoSection label {
   font-size: 14px;
   font-weight: 500;
@@ -432,8 +433,6 @@ thead {
 .billingInfoSection input:focus {
   border-color: rgb(30, 179, 154);
 }
-
-
 
 /* ------------- */
 

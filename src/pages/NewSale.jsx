@@ -21,11 +21,14 @@ import {
   getCustomerByPhone,
   postCustomers,
 } from "../services/localCustomerService.js";
+// Zustand InvoiceStore function
+import useInvoiceStore from "../store/useInvoiceStore.js";
 // Preprocess data to include combined fields
 const processedData = brandMedicineData.map((item) => ({
   ...item,
-  brandAndStrength: `${item.brandName.replace("-", "")} ${item.strength
-    }`.toLowerCase(),
+  brandAndStrength: `${item.brandName.replace("-", "")} ${
+    item.strength
+  }`.toLowerCase(),
   genericName: `${item.genericName}`.toLocaleLowerCase(),
 }));
 
@@ -54,29 +57,68 @@ export default function NewSale() {
   const [workerInitialized, setWorkerInitialized] = useState(false);
   const [isListVisible, setIsListVisible] = useState(false); // Track list visibility
   const containerRef = useRef(null); // Reference to the container
-  // Cart chart states
-  const [cartedProducts, setCartedProducts] = useState([]);
-  // Complete Sale details
-  const [saleDetails, setSaleDetails] = useState({
-    invoiceNumber: "",
-    invoiceDate: "",
-    invoiceTime: "",
-    subTotal_MRP: 0,
-    totalDiscount: 0,
-    payableAmount: 0,
-    customerPhoneNumber: "",
-    customerEmail: "",
-    customerName: "",
-    billingDetails: {
-      soldFrom: "Counter-1",
-      billIn: "Cash",
-      receivedAmount: "",
-      returnAmount: "",
-    },
-    productDetails: [], // Add this property to store product details
-    synced: false,
-  });
   const [isExistingCustomer, setIsExistingCustomer] = useState(false);
+  // Cart chart states
+  // const [cartedProducts, setCartedProducts] = useState([]);
+
+  // Complete Sale details
+  // const [saleDetails, setSaleDetails] = useState({
+  //   invoiceNumber: "",
+  //   invoiceDate: "",
+  //   invoiceTime: "",
+  //   subTotal_MRP: 0,
+  //   totalDiscount: 0,
+  //   payableAmount: 0,
+  //   customerPhoneNumber: "",
+  //   customerEmail: "",
+  //   customerName: "",
+  //   billingDetails: {
+  //     soldFrom: "Counter-1",
+  //     billIn: "Cash",
+  //     receivedAmount: "",
+  //     returnAmount: "",
+  //   },
+  //   productDetails: [], // Add this property to store product details
+  //   synced: false,
+  // });
+
+  // Zustand InvoiceStore states
+
+  useEffect(() => {
+    if (cartedProducts.length === 0) {
+      const now = new Date();
+      const invoiceNumber = `INV-${now.getTime()}`;
+      const invoiceDate = now.toLocaleDateString();
+      const invoiceTime = now.toLocaleTimeString();
+
+      setSaleDetails({
+        invoiceNumber,
+        invoiceDate,
+        invoiceTime,
+        subTotal_MRP: 0,
+        totalDiscount: 0,
+        payableAmount: 0,
+        customerPhoneNumber: "",
+        customerEmail: "",
+        customerName: "",
+        billingDetails: {
+          soldFrom: "Counter-1",
+          billIn: "Cash",
+          receivedAmount: "",
+          returnAmount: "",
+        },
+        productDetails: [],
+        synced: false,
+      });
+    }
+  }, []);
+
+  console.log(saleDetails?.customerPhoneNumber || "N/A");
+
+  const cartedProducts = useInvoiceStore((state) => state.cartedProducts);
+  const setCartedProducts = useInvoiceStore((state) => state.setCartedProducts);
+  const saleDetails = useInvoiceStore((state) => state.saleDetails);
+  const setSaleDetails = useInvoiceStore((state) => state.setSaleDetails);
 
   // SearchBar functionalities
 
@@ -246,9 +288,23 @@ export default function NewSale() {
   // Cart related functionalities---------------------------
 
   const handleAddToCart = (product) => {
+    const defultUnitPrice = product.unitPrice;
+    const clean = defultUnitPrice
+      .replace(/\n/g, " ")
+      .replace(/৳/g, "")
+      .replace(/,/g, ""); // Remove commas from numbers
+    const match = clean.match(/(\d+\.\d{2})/);
+    const cleanDefultUnitPrice = match ? parseFloat(match[1]) : null;
+    // console.log(match ? parseFloat(match[1]) : null);
+
     const updatedProducts = [
       ...cartedProducts,
-      { ...product, quantity: 1, newUnitPrice: 0, discount: 10 },
+      {
+        ...product,
+        quantity: 1,
+        newUnitPrice: cleanDefultUnitPrice ? cleanDefultUnitPrice : 0,
+        discount: 10,
+      },
     ];
     setCartedProducts(updatedProducts);
   };
@@ -283,7 +339,10 @@ export default function NewSale() {
     const productKey = generateUniqueKey(product, index);
     const updatedProducts = cartedProducts.map((cartedProduct, idx) =>
       generateUniqueKey(cartedProduct, idx) === productKey
-        ? { ...cartedProduct, newUnitPrice: parseFloat(value) }
+        ? {
+            ...cartedProduct,
+            newUnitPrice: value === "" ? "" : parseFloat(value),
+          }
         : cartedProduct
     );
 
@@ -389,7 +448,6 @@ export default function NewSale() {
 
   const postCustomersHandler = async () => {
     try {
-
       if (isExistingCustomer === false) {
         // Only add new customer if name and email are also filled
         if (
@@ -411,59 +469,70 @@ export default function NewSale() {
       } else {
         console.log("⚠️ Existing customer detected. No need to add.");
       }
-
     } catch (error) {
       console.error("Failed to Add new customer:", error);
     }
   };
 
-  useEffect(() => {
-    const fetchCustomer = async () => {
-      const phone = saleDetails.customerPhoneNumber;
-      if (phone.length === 11) {
-        try {
-          const existingCustomer = await getCustomerByPhone(phone);
+  // useEffect(() => {
+  //   const fetchCustomer = async () => {
+  //     const phone = saleDetails.customerPhoneNumber;
+  //     if (phone.length === 11) {
+  //       try {
+  //         const existingCustomer = await getCustomerByPhone(phone);
 
-          if (existingCustomer) {
-            console.log("Existing customer found:", existingCustomer);
-            setIsExistingCustomer(true);
-            setSaleDetails((prev) => ({
-              ...prev,
-              customerName: existingCustomer.customerName,
-              customerEmail: existingCustomer.customerEmail,
-            }));
-          } else {
-            console.log("🆕 New customer detected.");
-            setIsExistingCustomer(false);
-          }
-        } catch (err) {
-          console.error("❌ Error handling customer fetch/add:", err);
-        }
-      }
-    };
+  //         if (existingCustomer) {
+  //           console.log("Existing customer found:", existingCustomer);
+  //           setIsExistingCustomer(true);
+  //           setSaleDetails((prev) => ({
+  //             ...prev,
+  //             customerName: existingCustomer.customerName,
+  //             customerEmail: existingCustomer.customerEmail,
+  //           }));
+  //         } else {
+  //           console.log("🆕 New customer detected.");
+  //           setIsExistingCustomer(false);
+  //         }
+  //       } catch (err) {
+  //         console.error("❌ Error handling customer fetch/add:", err);
+  //       }
+  //     }
+  //   };
 
-    fetchCustomer();
-  }, [saleDetails.customerPhoneNumber]);
+  //   fetchCustomer();
+  // }, [saleDetails.customerPhoneNumber]);
 
   const handleCompleteSaleBtn = async () => {
     if (!isExistingCustomer) {
       await postCustomersHandler();
     }
     await postInvoice();
-  }
+  };
 
   // --------------------Billing Details
 
-  const handleBillingDetailChange = (key, value) => {
-    setSaleDetails((prev) => ({
-      ...prev,
-      billingDetails: {
+  const handleBillingDetailChange = (field, value) => {
+    setSaleDetails((prev) => {
+      const updatedBillingDetails = {
         ...prev.billingDetails,
-        [key]: value,
-      },
-    }));
-  };
+        [field]: value,
+      };
 
+      if (field === "receivedAmount") {
+        const payable = totalDiscountedPrice(); // your function
+        const received = parseFloat(value) || 0;
+        const calculatedReturnAmount =
+          received - payable >= 0 ? received - payable : 0;
+
+        updatedBillingDetails.returnAmount = calculatedReturnAmount.toFixed(2);
+      }
+
+      return {
+        ...prev,
+        billingDetails: updatedBillingDetails,
+      };
+    });
+  };
 
   return (
     <div>
@@ -516,7 +585,8 @@ export default function NewSale() {
             {/* ///////////////////////////////////////// */}
             {/* <Searchbar onCartUpdate={handleCartUpdate} /> */}
             {/* Cart Section */}
-            {cartedProducts.length > 0 && (
+            {/* {cartedProducts.length > 0 && ( */}
+            {(cartedProducts?.length ?? 0) > 0 && (
               <div className="">
                 <div className="cartedProductContainer">
                   <p className="sectionHeader">Carted Products</p>
@@ -585,13 +655,13 @@ export default function NewSale() {
                                     index
                                   )
                                 }
-                                onBlur={(e) =>
-                                  handleProductUnitPrice(
-                                    product,
-                                    e.target.value || product.unitPrice,
-                                    index
-                                  )
-                                }
+                                // onBlur={(e) =>
+                                //   handleProductUnitPrice(
+                                //     product,
+                                //     e.target.value || product.unitPrice,
+                                //     index
+                                //   )
+                                // }
                               />
                             </td>
 
@@ -644,8 +714,8 @@ export default function NewSale() {
                                 ৳
                                 {(
                                   product.quantity *
-                                  product.newUnitPrice *
-                                  (1 - product.discount / 100) || 0
+                                    product.newUnitPrice *
+                                    (1 - product.discount / 100) || 0
                                 ).toFixed(2)}
                               </span>
                             </td>
@@ -679,7 +749,7 @@ export default function NewSale() {
                         <label htmlFor="Customer Name">Customer Name</label>
                         <input
                           type="text"
-                          value={saleDetails.customerName || ""}
+                          // value={saleDetails.customerName || ""}
                           onChange={(e) =>
                             !isExistingCustomer &&
                             setSaleDetails((prev) => ({
@@ -741,9 +811,9 @@ export default function NewSale() {
                         <div className="amount">
                           <span>
                             ৳
-                            {(
-                              totalMRP() - totalDiscountedPrice() || 0
-                            ).toFixed(2)}
+                            {(totalMRP() - totalDiscountedPrice() || 0).toFixed(
+                              2
+                            )}
                           </span>
                         </div>
                       </div>
@@ -755,9 +825,9 @@ export default function NewSale() {
                         <div className="amount">
                           <span>
                             ৳
-                            {(
-                              totalMRP() - totalDiscountedPrice() || 0
-                            ).toFixed(2)}
+                            {(totalMRP() - totalDiscountedPrice() || 0).toFixed(
+                              2
+                            )}
                           </span>
                         </div>
                       </div>
@@ -769,9 +839,9 @@ export default function NewSale() {
                         <div className="amount">
                           <span>
                             ৳
-                            {(
-                              totalMRP() - totalDiscountedPrice() || 0
-                            ).toFixed(2)}
+                            {(totalMRP() - totalDiscountedPrice() || 0).toFixed(
+                              2
+                            )}
                           </span>
                         </div>
                       </div>
@@ -783,9 +853,9 @@ export default function NewSale() {
                         <div className="amount">
                           <span>
                             ৳
-                            {(
-                              totalMRP() - totalDiscountedPrice() || 0
-                            ).toFixed(2)}
+                            {(totalMRP() - totalDiscountedPrice() || 0).toFixed(
+                              2
+                            )}
                           </span>
                         </div>
                       </div>
@@ -803,7 +873,7 @@ export default function NewSale() {
 
                   {/*  */}
 
-                  <div className="billingInfoSection">
+                  {/* <div className="billingInfoSection">
                     <p className="sectionHeader">Billing Details</p>
                     <div className="billingInfoBG">
                       <div className="counterSelectContainer">
@@ -811,7 +881,12 @@ export default function NewSale() {
                         <select
                           className="counterSelect"
                           value={saleDetails.billingDetails.soldFrom}
-                          onChange={(e) => handleBillingDetailChange("soldFrom", e.target.value)}
+                          onChange={(e) =>
+                            handleBillingDetailChange(
+                              "soldFrom",
+                              e.target.value
+                            )
+                          }
                         >
                           <option value="Counter-1">Counter-1</option>
                           <option value="Counter-2">Counter-2</option>
@@ -822,9 +897,13 @@ export default function NewSale() {
 
                       <div className="billSelectContainer">
                         <label htmlFor="Bill by">Bill in</label>
-                        <select className="billMathodSelect"
+                        <select
+                          className="billMathodSelect"
                           value={saleDetails.billingDetails.billIn}
-                          onChange={(e) => handleBillingDetailChange("billIn", e.target.value)}>
+                          onChange={(e) =>
+                            handleBillingDetailChange("billIn", e.target.value)
+                          }
+                        >
                           <option value="Cash">Cash</option>
                           <option value="Bkash">Bkash</option>
                           <option value="Nagad">Nagad</option>
@@ -833,15 +912,21 @@ export default function NewSale() {
                       </div>
 
                       <div className="cashDetailContainer">
-                        <div className="recevedCashAmountContainer">
-                          <label htmlFor="receved amount">Receved Amount</label>
+                        <div className="receivedCashAmountContainer">
+                          <label htmlFor="received amount">
+                            Received Amount
+                          </label>
                           <input
                             type="number"
                             placeholder="0"
                             value={saleDetails.billingDetails.receivedAmount}
-                            onChange={(e) => handleBillingDetailChange("receivedAmount", e.target.value)}
+                            onChange={(e) =>
+                              handleBillingDetailChange(
+                                "receivedAmount",
+                                e.target.value
+                              )
+                            }
                           />
-
                         </div>
                         <div className="returnCashAmountContainer">
                           <label htmlFor="return amount">Return Amount</label>
@@ -849,13 +934,17 @@ export default function NewSale() {
                             type="number"
                             placeholder="0"
                             value={saleDetails.billingDetails.returnAmount}
-                            onChange={(e) => handleBillingDetailChange("returnAmount", e.target.value)}
+                            onChange={(e) =>
+                              handleBillingDetailChange(
+                                "returnAmount",
+                                e.target.value
+                              )
+                            }
                           />
-
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
                 {/* Submit Btn*/}
 
@@ -864,7 +953,7 @@ export default function NewSale() {
                     onClick={() => {
                       // console.log("Sale Details:", saleDetails);
                       // Add API call or further logic here
-                      handleCompleteSaleBtn()
+                      handleCompleteSaleBtn();
                     }}
                   >
                     Complete Sale
@@ -872,15 +961,6 @@ export default function NewSale() {
                 </div>
               </div>
             )}
-            {/* <div>
-              <button onClick={postInvoice}>Post Invoices</button>
-            </div>
-            <div>
-              <button onClick={postCustomersHandler}>Post Customer</button>
-            </div>
-            <div>
-              <button onClick={getInvoice}>Get Invoices</button>
-            </div> */}
           </div>
         </div>
       </div>
