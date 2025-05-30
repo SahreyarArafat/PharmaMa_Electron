@@ -26,9 +26,8 @@ import useInvoiceStore from "../store/useInvoiceStore.js";
 // Preprocess data to include combined fields
 const processedData = brandMedicineData.map((item) => ({
   ...item,
-  brandAndStrength: `${item.brandName.replace("-", "")} ${
-    item.strength
-  }`.toLowerCase(),
+  brandAndStrength: `${item.brandName.replace("-", "")} ${item.strength
+    }`.toLowerCase(),
   genericName: `${item.genericName}`.toLocaleLowerCase(),
 }));
 
@@ -58,10 +57,18 @@ export default function NewSale() {
   const [isListVisible, setIsListVisible] = useState(false); // Track list visibility
   const containerRef = useRef(null); // Reference to the container
   const [isExistingCustomer, setIsExistingCustomer] = useState(false);
-  // Cart chart states
+
+  // // Customer Details states
+  // const [customerDetails, setCustomerDetails] = useState({
+  //   customerPhoneNumber: "",
+  //   customerName: "",
+  //   customerEmail: "",
+  // });
+
+  // // Cart chart states
   // const [cartedProducts, setCartedProducts] = useState([]);
 
-  // Complete Sale details
+  // // Complete Sale details
   // const [saleDetails, setSaleDetails] = useState({
   //   invoiceNumber: "",
   //   invoiceDate: "",
@@ -110,11 +117,18 @@ export default function NewSale() {
         productDetails: [],
         synced: false,
       });
+
+      setCustomerDetails({
+        customerPhoneNumber: "",
+        customerEmail: "",
+        customerName: "",
+      })
     }
   }, []);
 
-  console.log(saleDetails?.customerPhoneNumber || "N/A");
 
+  const customerDetails = useInvoiceStore((state) => state.customerDetails);
+  const setCustomerDetails = useInvoiceStore((state) => state.setCustomerDetails);
   const cartedProducts = useInvoiceStore((state) => state.cartedProducts);
   const setCartedProducts = useInvoiceStore((state) => state.setCartedProducts);
   const saleDetails = useInvoiceStore((state) => state.saleDetails);
@@ -340,9 +354,9 @@ export default function NewSale() {
     const updatedProducts = cartedProducts.map((cartedProduct, idx) =>
       generateUniqueKey(cartedProduct, idx) === productKey
         ? {
-            ...cartedProduct,
-            newUnitPrice: value === "" ? "" : parseFloat(value),
-          }
+          ...cartedProduct,
+          newUnitPrice: value === "" ? "" : parseFloat(value),
+        }
         : cartedProduct
     );
 
@@ -389,8 +403,7 @@ export default function NewSale() {
   // ----------------Customer Info Section
 
   useEffect(() => {
-    setSaleDetails((prev) => ({
-      ...prev,
+    setSaleDetails({
       productDetails: cartedProducts.map((product) => ({
         brandName: product.brandName,
         genericName: product.genericName,
@@ -408,7 +421,7 @@ export default function NewSale() {
       subTotal_MRP: totalMRP(),
       totalDiscount: (totalMRP() - totalDiscountedPrice()).toFixed(2),
       payableAmount: totalDiscountedPrice(),
-    }));
+    });
   }, [cartedProducts]);
 
   useEffect(() => {
@@ -417,13 +430,20 @@ export default function NewSale() {
     const invoiceDate = now.toLocaleDateString();
     const invoiceTime = now.toLocaleTimeString();
 
-    setSaleDetails((prev) => ({
-      ...prev,
+    setSaleDetails({
       invoiceNumber,
       invoiceDate,
       invoiceTime,
-    }));
+    });
   }, []);
+
+  useEffect(() => {
+    setSaleDetails({
+      customerPhoneNumber: customerDetails.customerPhoneNumber,
+      customerEmail: customerDetails.customerEmail,
+      customerName: customerDetails.customerName,
+    });
+  }, [customerDetails]);
 
   // Server Api Functions
 
@@ -451,13 +471,13 @@ export default function NewSale() {
       if (isExistingCustomer === false) {
         // Only add new customer if name and email are also filled
         if (
-          saleDetails.customerName.trim() !== "" &&
-          saleDetails.customerEmail.trim() !== ""
+          customerDetails.customerName.trim() !== "" &&
+          customerDetails.customerEmail.trim() !== ""
         ) {
           const newCustomer = {
-            customerPhoneNumber: saleDetails.customerPhoneNumber,
-            customerName: saleDetails.customerName,
-            customerEmail: saleDetails.customerEmail,
+            customerPhoneNumber: customerDetails.customerPhoneNumber,
+            customerName: customerDetails.customerName,
+            customerEmail: customerDetails.customerEmail,
           };
 
           const result = await postCustomers([newCustomer]);
@@ -474,33 +494,36 @@ export default function NewSale() {
     }
   };
 
-  // useEffect(() => {
-  //   const fetchCustomer = async () => {
-  //     const phone = saleDetails.customerPhoneNumber;
-  //     if (phone.length === 11) {
-  //       try {
-  //         const existingCustomer = await getCustomerByPhone(phone);
+  useEffect(() => {
+    const fetchCustomer = async () => {
+      const phone = customerDetails.customerPhoneNumber;
+      if (phone.length === 11) {
+        try {
+          const existingCustomer = await getCustomerByPhone(phone);
 
-  //         if (existingCustomer) {
-  //           console.log("Existing customer found:", existingCustomer);
-  //           setIsExistingCustomer(true);
-  //           setSaleDetails((prev) => ({
-  //             ...prev,
-  //             customerName: existingCustomer.customerName,
-  //             customerEmail: existingCustomer.customerEmail,
-  //           }));
-  //         } else {
-  //           console.log("🆕 New customer detected.");
-  //           setIsExistingCustomer(false);
-  //         }
-  //       } catch (err) {
-  //         console.error("❌ Error handling customer fetch/add:", err);
-  //       }
-  //     }
-  //   };
+          if (existingCustomer) {
+            console.log("Existing customer found:", existingCustomer);
+            setIsExistingCustomer(true);
+            setCustomerDetails({
+              customerName: existingCustomer.customerName,
+              customerEmail: existingCustomer.customerEmail,
+            });
+          } else {
+            console.log("🆕 New customer detected.");
+            setCustomerDetails({
+              customerName: '',
+              customerEmail: '',
+            });
+            setIsExistingCustomer(false);
+          }
+        } catch (err) {
+          console.error("❌ Error handling customer fetch/add:", err);
+        }
+      }
+    };
 
-  //   fetchCustomer();
-  // }, [saleDetails.customerPhoneNumber]);
+    fetchCustomer();
+  }, [customerDetails.customerPhoneNumber]);
 
   const handleCompleteSaleBtn = async () => {
     if (!isExistingCustomer) {
@@ -512,26 +535,29 @@ export default function NewSale() {
   // --------------------Billing Details
 
   const handleBillingDetailChange = (field, value) => {
-    setSaleDetails((prev) => {
-      const updatedBillingDetails = {
-        ...prev.billingDetails,
-        [field]: value,
-      };
 
-      if (field === "receivedAmount") {
-        const payable = totalDiscountedPrice(); // your function
-        const received = parseFloat(value) || 0;
-        const calculatedReturnAmount =
-          received - payable >= 0 ? received - payable : 0;
+    // Get the current saleDetails from the Zustand store
+    const currentSaleDetails = useInvoiceStore.getState().saleDetails || {};
+    const currentBillingDetails = currentSaleDetails.billingDetails || {};
+    const updatedBillingDetails = {
+      ...currentBillingDetails,
+      [field]: value,
+    };
 
-        updatedBillingDetails.returnAmount = calculatedReturnAmount.toFixed(2);
-      }
+    if (field === "receivedAmount") {
+      const payable = totalDiscountedPrice(); // your existing function
+      const received = parseFloat(value) || 0;
+      const calculatedReturnAmount = received - payable >= 0 ? received - payable : 0;
+      updatedBillingDetails.returnAmount = calculatedReturnAmount.toFixed(2);
+    }
 
-      return {
-        ...prev,
-        billingDetails: updatedBillingDetails,
-      };
-    });
+    const updatedSaleDetails = {
+      ...currentSaleDetails,
+      billingDetails: updatedBillingDetails,
+    };
+
+    console.log("Updated Billing Details:", updatedBillingDetails);
+    setSaleDetails(updatedSaleDetails);
   };
 
   return (
@@ -655,13 +681,13 @@ export default function NewSale() {
                                     index
                                   )
                                 }
-                                // onBlur={(e) =>
-                                //   handleProductUnitPrice(
-                                //     product,
-                                //     e.target.value || product.unitPrice,
-                                //     index
-                                //   )
-                                // }
+                              // onBlur={(e) =>
+                              //   handleProductUnitPrice(
+                              //     product,
+                              //     e.target.value || product.unitPrice,
+                              //     index
+                              //   )
+                              // }
                               />
                             </td>
 
@@ -714,8 +740,8 @@ export default function NewSale() {
                                 ৳
                                 {(
                                   product.quantity *
-                                    product.newUnitPrice *
-                                    (1 - product.discount / 100) || 0
+                                  product.newUnitPrice *
+                                  (1 - product.discount / 100) || 0
                                 ).toFixed(2)}
                               </span>
                             </td>
@@ -736,12 +762,12 @@ export default function NewSale() {
                         <label htmlFor="Customer Number">Phone Number</label>
                         <input
                           type="number"
-                          onChange={(e) =>
-                            setSaleDetails((prev) => ({
-                              ...prev,
-                              customerPhoneNumber: e.target.value,
-                            }))
-                          }
+                          value={customerDetails.customerPhoneNumber || ""}
+                          onChange={(e) => {
+                            setCustomerDetails({
+                              customerPhoneNumber: e.target.value
+                            })
+                          }}
                         />
                       </div>
 
@@ -749,13 +775,12 @@ export default function NewSale() {
                         <label htmlFor="Customer Name">Customer Name</label>
                         <input
                           type="text"
-                          // value={saleDetails.customerName || ""}
+                          value={customerDetails.customerName || ""}
                           onChange={(e) =>
                             !isExistingCustomer &&
-                            setSaleDetails((prev) => ({
-                              ...prev,
+                            setCustomerDetails({
                               customerName: e.target.value,
-                            }))
+                            })
                           }
                           readOnly={isExistingCustomer}
                           style={{
@@ -771,13 +796,12 @@ export default function NewSale() {
                         <label htmlFor="Customer Email">Customer Email</label>
                         <input
                           type="email"
-                          value={saleDetails.customerEmail || ""}
+                          value={customerDetails.customerEmail || ""}
                           onChange={(e) =>
                             !isExistingCustomer &&
-                            setSaleDetails((prev) => ({
-                              ...prev,
+                            setCustomerDetails({
                               customerEmail: e.target.value,
-                            }))
+                            })
                           }
                           readOnly={isExistingCustomer}
                           style={{
@@ -873,19 +897,16 @@ export default function NewSale() {
 
                   {/*  */}
 
-                  {/* <div className="billingInfoSection">
+                  <div className="billingInfoSection">
                     <p className="sectionHeader">Billing Details</p>
                     <div className="billingInfoBG">
                       <div className="counterSelectContainer">
                         <label htmlFor="Sold from">Sold from</label>
                         <select
                           className="counterSelect"
-                          value={saleDetails.billingDetails.soldFrom}
+                          value={saleDetails.billingDetails?.soldFrom || "Counter-1"}
                           onChange={(e) =>
-                            handleBillingDetailChange(
-                              "soldFrom",
-                              e.target.value
-                            )
+                            handleBillingDetailChange("soldFrom", e.target.value)
                           }
                         >
                           <option value="Counter-1">Counter-1</option>
@@ -899,7 +920,7 @@ export default function NewSale() {
                         <label htmlFor="Bill by">Bill in</label>
                         <select
                           className="billMathodSelect"
-                          value={saleDetails.billingDetails.billIn}
+                          value={saleDetails.billingDetails?.billIn || "Cash"}
                           onChange={(e) =>
                             handleBillingDetailChange("billIn", e.target.value)
                           }
@@ -913,18 +934,13 @@ export default function NewSale() {
 
                       <div className="cashDetailContainer">
                         <div className="receivedCashAmountContainer">
-                          <label htmlFor="received amount">
-                            Received Amount
-                          </label>
+                          <label htmlFor="received amount">Received Amount</label>
                           <input
                             type="number"
                             placeholder="0"
-                            value={saleDetails.billingDetails.receivedAmount}
+                            value={saleDetails.billingDetails?.receivedAmount || ""}
                             onChange={(e) =>
-                              handleBillingDetailChange(
-                                "receivedAmount",
-                                e.target.value
-                              )
+                              handleBillingDetailChange("receivedAmount", e.target.value)
                             }
                           />
                         </div>
@@ -933,18 +949,15 @@ export default function NewSale() {
                           <input
                             type="number"
                             placeholder="0"
-                            value={saleDetails.billingDetails.returnAmount}
+                            value={saleDetails.billingDetails?.returnAmount || ""}
                             onChange={(e) =>
-                              handleBillingDetailChange(
-                                "returnAmount",
-                                e.target.value
-                              )
+                              handleBillingDetailChange("returnAmount", e.target.value)
                             }
                           />
                         </div>
                       </div>
                     </div>
-                  </div> */}
+                  </div>
                 </div>
                 {/* Submit Btn*/}
 
@@ -953,7 +966,9 @@ export default function NewSale() {
                     onClick={() => {
                       // console.log("Sale Details:", saleDetails);
                       // Add API call or further logic here
-                      handleCompleteSaleBtn();
+                      // handleCompleteSaleBtn();
+                      console.log("Sale Details:", saleDetails);
+
                     }}
                   >
                     Complete Sale
