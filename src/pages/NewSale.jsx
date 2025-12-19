@@ -26,8 +26,9 @@ import useInvoiceStore from "../store/useInvoiceStore.js";
 // Preprocess data to include combined fields
 const processedData = brandMedicineData.map((item) => ({
   ...item,
-  brandAndStrength: `${item.brandName.replace("-", "")} ${item.strength
-    }`.toLowerCase(),
+  brandAndStrength: `${item.brandName.replace("-", "")} ${
+    item.strength
+  }`.toLowerCase(),
   genericName: `${item.genericName}`.toLocaleLowerCase(),
 }));
 
@@ -44,6 +45,7 @@ const debounce = (func, delay) => {
 // Internal Components
 import Topbar from "../components/Topbar";
 import Navbar from "../components/Navbar";
+import SaleTabs from "../components/SaleTabs"; // Adjust path as needed
 // Styles
 import "../styles/newSale.css";
 
@@ -57,7 +59,7 @@ export default function NewSale() {
   const [isListVisible, setIsListVisible] = useState(false); // Track list visibility
   const containerRef = useRef(null); // Reference to the container
   const [isExistingCustomer, setIsExistingCustomer] = useState(false);
-
+  const [wasAutoFilled, setWasAutoFilled] = useState(false);
   // // Customer Details states
   // const [customerDetails, setCustomerDetails] = useState({
   //   customerPhoneNumber: "",
@@ -77,8 +79,8 @@ export default function NewSale() {
   //   totalDiscount: 0,
   //   payableAmount: 0,
   //   customerPhoneNumber: "",
-  //   customerEmail: "",
   //   customerName: "",
+  //   customerEmail: "",
   //   billingDetails: {
   //     soldFrom: "Counter-1",
   //     billIn: "Cash",
@@ -91,48 +93,15 @@ export default function NewSale() {
 
   // Zustand InvoiceStore states
 
-  useEffect(() => {
-    if (cartedProducts.length === 0) {
-      const now = new Date();
-      const invoiceNumber = `INV-${now.getTime()}`;
-      const invoiceDate = now.toLocaleDateString();
-      const invoiceTime = now.toLocaleTimeString();
+  const createNewSale = useInvoiceStore((state) => state.createNewSale);
+  const activeSaleId = useInvoiceStore((state) => state.activeSaleId);
+  const saleList = useInvoiceStore((state) => state.saleList);
+  const updateSale = useInvoiceStore((state) => state.updateSale);
+  const removeSale = useInvoiceStore((state) => state.removeSale);
 
-      setSaleDetails({
-        invoiceNumber,
-        invoiceDate,
-        invoiceTime,
-        subTotal_MRP: 0,
-        totalDiscount: 0,
-        payableAmount: 0,
-        customerPhoneNumber: "",
-        customerEmail: "",
-        customerName: "",
-        billingDetails: {
-          soldFrom: "Counter-1",
-          billIn: "Cash",
-          receivedAmount: "",
-          returnAmount: "",
-        },
-        productDetails: [],
-        synced: false,
-      });
-
-      setCustomerDetails({
-        customerPhoneNumber: "",
-        customerEmail: "",
-        customerName: "",
-      })
-    }
-  }, []);
-
-
-  const customerDetails = useInvoiceStore((state) => state.customerDetails);
-  const setCustomerDetails = useInvoiceStore((state) => state.setCustomerDetails);
-  const cartedProducts = useInvoiceStore((state) => state.cartedProducts);
-  const setCartedProducts = useInvoiceStore((state) => state.setCartedProducts);
-  const saleDetails = useInvoiceStore((state) => state.saleDetails);
-  const setSaleDetails = useInvoiceStore((state) => state.setSaleDetails);
+  const activeSale = saleList.find(
+    (sale) => sale.invoiceNumber === activeSaleId
+  );
 
   // SearchBar functionalities
 
@@ -308,92 +277,109 @@ export default function NewSale() {
       .replace(/৳/g, "")
       .replace(/,/g, ""); // Remove commas from numbers
     const match = clean.match(/(\d+\.\d{2})/);
-    const cleanDefultUnitPrice = match ? parseFloat(match[1]) : null;
+    const cleanDefaultUnitPrice = match ? parseFloat(match[1]) : 0;
     // console.log(match ? parseFloat(match[1]) : null);
 
     const updatedProducts = [
-      ...cartedProducts,
+      ...(activeSale.productDetails || []),
       {
         ...product,
         quantity: 1,
-        newUnitPrice: cleanDefultUnitPrice ? cleanDefultUnitPrice : 0,
+        newUnitPrice: cleanDefaultUnitPrice,
         discount: 10,
       },
     ];
-    setCartedProducts(updatedProducts);
+
+    updateSale(activeSaleId, {
+      productDetails: updatedProducts,
+    });
   };
 
   const isProductCarted = (product) => {
     const productKey = generateUniqueKey(product);
-    return cartedProducts.some(
+    return (activeSale.productDetails || []).some(
       (cartedProduct) => generateUniqueKey(cartedProduct) === productKey
     );
   };
 
   const removeCartedProduct = (product) => {
     const productKey = generateUniqueKey(product);
-    const newCartedProducts = cartedProducts.filter(
+    const updatedProducts = (activeSale.productDetails || []).filter(
       (cartedProduct) => generateUniqueKey(cartedProduct) !== productKey
     );
-    setCartedProducts(newCartedProducts);
+
+    updateSale(activeSaleId, {
+      productDetails: updatedProducts,
+    });
   };
 
   const handleProductQuantity = (product, value, index) => {
     const productKey = generateUniqueKey(product, index);
-    const updatedProducts = cartedProducts.map((cartedProduct, idx) =>
-      generateUniqueKey(cartedProduct, idx) === productKey
-        ? { ...cartedProduct, quantity: value === "" ? "" : parseInt(value) }
-        : cartedProduct
+    const updatedProducts = (activeSale.productDetails || []).map(
+      (cartedProduct, idx) =>
+        generateUniqueKey(cartedProduct, idx) === productKey
+          ? { ...cartedProduct, quantity: value === "" ? "" : parseInt(value) }
+          : cartedProduct
     );
 
-    setCartedProducts(updatedProducts);
+    updateSale(activeSaleId, {
+      productDetails: updatedProducts,
+    });
   };
 
   const handleProductUnitPrice = (product, value, index) => {
     const productKey = generateUniqueKey(product, index);
-    const updatedProducts = cartedProducts.map((cartedProduct, idx) =>
-      generateUniqueKey(cartedProduct, idx) === productKey
-        ? {
-          ...cartedProduct,
-          newUnitPrice: value === "" ? "" : parseFloat(value),
-        }
-        : cartedProduct
+    const updatedProducts = (activeSale.productDetails || []).map(
+      (cartedProduct, idx) =>
+        generateUniqueKey(cartedProduct, idx) === productKey
+          ? {
+              ...cartedProduct,
+              newUnitPrice: value === "" ? "" : parseFloat(value),
+            }
+          : cartedProduct
     );
 
-    setCartedProducts(updatedProducts);
+    updateSale(activeSaleId, {
+      productDetails: updatedProducts,
+    });
   };
 
   const handleProductDiscount = (product, value, index) => {
     const productKey = generateUniqueKey(product, index);
 
-    const updatedProducts = cartedProducts.map((cartedProduct, idx) =>
-      generateUniqueKey(cartedProduct, idx) === productKey
-        ? { ...cartedProduct, discount: parseFloat(value) }
-        : cartedProduct
+    const updatedProducts = (activeSale.productDetails || []).map(
+      (cartedProduct, idx) =>
+        generateUniqueKey(cartedProduct, idx) === productKey
+          ? { ...cartedProduct, discount: parseFloat(value) }
+          : cartedProduct
     );
 
-    setCartedProducts(updatedProducts);
+    updateSale(activeSaleId, {
+      productDetails: updatedProducts,
+    });
   };
 
   const totalMRP = () => {
-    return cartedProducts
-      .reduce((total, product) => {
-        const totalPrice = product.quantity * product.newUnitPrice;
-        return total + totalPrice || 0;
-      }, 0)
-      .toFixed(2);
+    const total = activeSale.productDetails.reduce((acc, product) => {
+      const unitPrice = parseFloat(product.newUnitPrice) || 0;
+      const quantity = parseInt(product.quantity) || 0;
+      return acc + unitPrice * quantity;
+    }, 0);
+
+    return total.toFixed(2);
   };
 
   const totalDiscountedPrice = () => {
-    return cartedProducts
-      .reduce((total, product) => {
-        const discountedPrice =
-          product.quantity *
-          product.newUnitPrice *
-          (1 - product.discount / 100);
-        return total + discountedPrice || 0;
-      }, 0)
-      .toFixed(2);
+    const total = activeSale.productDetails.reduce((acc, product) => {
+      const unitPrice = parseFloat(product.newUnitPrice) || 0;
+      const quantity = parseInt(product.quantity) || 0;
+      const discount = parseFloat(product.discount) || 0;
+
+      const discountedPrice = quantity * unitPrice * (1 - discount / 100);
+      return acc + discountedPrice;
+    }, 0);
+
+    return total.toFixed(2);
   };
 
   const generateUniqueKey = (item, index) => {
@@ -403,47 +389,17 @@ export default function NewSale() {
   // ----------------Customer Info Section
 
   useEffect(() => {
-    setSaleDetails({
-      productDetails: cartedProducts.map((product) => ({
-        brandName: product.brandName,
-        genericName: product.genericName,
-        dosageform: product.dosageform,
-        strength: product.strength,
-        quantity: product.quantity,
-        unitPrice: product.newUnitPrice,
-        discount: product.discount,
-        totalPrice: (
-          product.quantity *
-          product.newUnitPrice *
-          (1 - product.discount / 100)
-        ).toFixed(2),
-      })),
-      subTotal_MRP: totalMRP(),
-      totalDiscount: (totalMRP() - totalDiscountedPrice()).toFixed(2),
-      payableAmount: totalDiscountedPrice(),
-    });
-  }, [cartedProducts]);
+    if (!activeSale || !activeSale.productDetails) return;
 
-  useEffect(() => {
-    const now = new Date();
-    const invoiceNumber = `INV-${now.getTime()}`; // Unique invoice number
-    const invoiceDate = now.toLocaleDateString();
-    const invoiceTime = now.toLocaleTimeString();
+    const subTotal = totalMRP(activeSale.productDetails);
+    const discounted = totalDiscountedPrice(activeSale.productDetails);
 
-    setSaleDetails({
-      invoiceNumber,
-      invoiceDate,
-      invoiceTime,
+    updateSale(activeSaleId, {
+      subTotal_MRP: subTotal,
+      totalDiscount: (subTotal - discounted).toFixed(2),
+      payableAmount: discounted,
     });
-  }, []);
-
-  useEffect(() => {
-    setSaleDetails({
-      customerPhoneNumber: customerDetails.customerPhoneNumber,
-      customerEmail: customerDetails.customerEmail,
-      customerName: customerDetails.customerName,
-    });
-  }, [customerDetails]);
+  }, [activeSale?.productDetails?.length]);
 
   // Server Api Functions
 
@@ -453,8 +409,21 @@ export default function NewSale() {
   };
 
   const postInvoice = async () => {
-    const result = await postLocalInvoices([saleDetails]);
-    console.log(result);
+    const { activeSaleId, saleList } = useInvoiceStore.getState();
+    const activeSale = saleList.find(
+      (sale) => sale.invoiceNumber === activeSaleId
+    );
+
+    if (!activeSale) {
+      console.error("No active sale to post.");
+      return;
+    }
+    try {
+      const result = await postLocalInvoices([activeSale]);
+      console.log("✅ Invoice posted:", result);
+    } catch (error) {
+      console.error("❌ Failed to post invoice:", error);
+    }
   };
 
   const getCustomersHandler = async () => {
@@ -467,17 +436,25 @@ export default function NewSale() {
   };
 
   const postCustomersHandler = async () => {
+    const { activeSaleId, saleList, updateSale } = useInvoiceStore.getState();
+    const activeSale = saleList.find(
+      (sale) => sale.invoiceNumber === activeSaleId
+    );
+
+    if (!activeSale) {
+      console.error("❌ No active sale found.");
+      return;
+    }
+
     try {
-      if (isExistingCustomer === false) {
-        // Only add new customer if name and email are also filled
-        if (
-          customerDetails.customerName.trim() !== "" &&
-          customerDetails.customerEmail.trim() !== ""
-        ) {
+      if (!isExistingCustomer) {
+        const { customerName, customerEmail, customerPhoneNumber } = activeSale;
+
+        if (customerName.trim() !== "" && customerEmail.trim() !== "") {
           const newCustomer = {
-            customerPhoneNumber: customerDetails.customerPhoneNumber,
-            customerName: customerDetails.customerName,
-            customerEmail: customerDetails.customerEmail,
+            customerPhoneNumber,
+            customerName,
+            customerEmail,
           };
 
           const result = await postCustomers([newCustomer]);
@@ -490,31 +467,49 @@ export default function NewSale() {
         console.log("⚠️ Existing customer detected. No need to add.");
       }
     } catch (error) {
-      console.error("Failed to Add new customer:", error);
+      console.error("❌ Failed to add new customer:", error);
     }
   };
 
   useEffect(() => {
+    const { activeSaleId, saleList, updateSale } = useInvoiceStore.getState();
+    const activeSale = saleList.find(
+      (sale) => sale.invoiceNumber === activeSaleId
+    );
+    if (!activeSale) return;
+
+    const phone = activeSale.customerPhoneNumber;
+
     const fetchCustomer = async () => {
-      const phone = customerDetails.customerPhoneNumber;
-      if (phone.length === 11) {
+      if (phone?.length === 11) {
         try {
           const existingCustomer = await getCustomerByPhone(phone);
 
           if (existingCustomer) {
             console.log("Existing customer found:", existingCustomer);
             setIsExistingCustomer(true);
-            setCustomerDetails({
+
+            updateSale(activeSaleId, {
               customerName: existingCustomer.customerName,
               customerEmail: existingCustomer.customerEmail,
+              newCustomer: false,
             });
+
+            setWasAutoFilled(true);
           } else {
             console.log("🆕 New customer detected.");
-            setCustomerDetails({
-              customerName: '',
-              customerEmail: '',
-            });
+            console.log(activeSale.customerName);
+
             setIsExistingCustomer(false);
+
+            if (!activeSale.newCustomer) {
+              updateSale(activeSaleId, {
+                customerName: "",
+                customerEmail: "",
+                newCustomer: true,
+              });
+              setWasAutoFilled(false);
+            }
           }
         } catch (err) {
           console.error("❌ Error handling customer fetch/add:", err);
@@ -523,51 +518,70 @@ export default function NewSale() {
     };
 
     fetchCustomer();
-  }, [customerDetails.customerPhoneNumber]);
+  }, [
+    useInvoiceStore(
+      (state) =>
+        state.saleList.find((sale) => sale.invoiceNumber === state.activeSaleId)
+          ?.customerPhoneNumber
+    ),
+  ]);
 
   const handleCompleteSaleBtn = async () => {
-    if (!isExistingCustomer) {
-      await postCustomersHandler();
+    if (!activeSaleId) {
+      console.warn("⚠️ No active sale to complete.");
+      return;
     }
-    await postInvoice();
+
+    try {
+      // 1. Add customer if new
+      if (!isExistingCustomer) {
+        await postCustomersHandler();
+      }
+
+      // 2. Post the invoice
+      await postInvoice();
+
+      // 3. Remove the completed sale
+      removeSale(activeSaleId);
+
+      console.log("✅ Sale completed and cleared from tab.");
+    } catch (error) {
+      console.error("❌ Failed to complete sale:", error);
+    }
   };
 
   // --------------------Billing Details
 
   const handleBillingDetailChange = (field, value) => {
+    const currentBillingDetails = activeSale.billingDetails || {};
 
-    // Get the current saleDetails from the Zustand store
-    const currentSaleDetails = useInvoiceStore.getState().saleDetails || {};
-    const currentBillingDetails = currentSaleDetails.billingDetails || {};
     const updatedBillingDetails = {
       ...currentBillingDetails,
       [field]: value,
     };
 
     if (field === "receivedAmount") {
-      const payable = totalDiscountedPrice(); // your existing function
+      const payable = totalDiscountedPrice();
       const received = parseFloat(value) || 0;
-      const calculatedReturnAmount = received - payable >= 0 ? received - payable : 0;
-      updatedBillingDetails.returnAmount = calculatedReturnAmount.toFixed(2);
+      const returnAmount = received - payable >= 0 ? received - payable : 0;
+      updatedBillingDetails.returnAmount = returnAmount.toFixed(2);
     }
 
-    const updatedSaleDetails = {
-      ...currentSaleDetails,
+    updateSale(activeSaleId, {
       billingDetails: updatedBillingDetails,
-    };
-
-    console.log("Updated Billing Details:", updatedBillingDetails);
-    setSaleDetails(updatedSaleDetails);
+    });
   };
 
   return (
     <div>
       <Topbar />
+
       <div className="navbarAndContentMaincontainer">
         <Navbar />
 
         <div className="contentContainer">
           <div className="newSaleContainer">
+            <SaleTabs />
             <h1 className="pageHeader">New Sale</h1>
             {/* ////////////////////////////////////////// */}
             <div ref={containerRef} className="medicineSearchContainer">
@@ -582,9 +596,16 @@ export default function NewSale() {
                   value={medicineName}
                   onFocus={() => setIsListVisible(true)} // Show list on focus
                 />
-                <div className="searchIconContainer">
+                <button
+                  className="searchIconContainer"
+                  onClick={() => {
+                    // For Dev purpose to clear the Zustand States
+                    useInvoiceStore.persist.clearStorage();
+                    useInvoiceStore.setState({}, true);
+                  }}
+                >
                   <IoSearch className="searchIcon" />
-                </div>
+                </button>
               </div>
 
               {/* Filtered List Section */}
@@ -612,7 +633,8 @@ export default function NewSale() {
             {/* <Searchbar onCartUpdate={handleCartUpdate} /> */}
             {/* Cart Section */}
             {/* {cartedProducts.length > 0 && ( */}
-            {(cartedProducts?.length ?? 0) > 0 && (
+            {/* {(saleDetails.productDetails?.length ?? 0) > 0 && ( */}
+            {(activeSale?.productDetails?.length ?? 0) > 0 && (
               <div className="">
                 <div className="cartedProductContainer">
                   <p className="sectionHeader">Carted Products</p>
@@ -629,7 +651,8 @@ export default function NewSale() {
                         </tr>
                       </thead>
                       <tbody>
-                        {cartedProducts.map((product, index) => (
+                        {/* {saleDetails.productDetails.map((product, index) => ( */}
+                        {activeSale.productDetails.map((product, index) => (
                           <tr key={generateUniqueKey(product, index)}>
                             <td className="productInfo">
                               <span className="dosageform">
@@ -641,6 +664,12 @@ export default function NewSale() {
                               <span className="strength">
                                 {product.strength}
                               </span>
+                              <p className="genericName">
+                                {product.genericName}
+                              </p>
+                              <p className="manufacturer">
+                                {product.manufacturer}
+                              </p>
                             </td>
 
                             {/* Quantity Input */}
@@ -681,13 +710,13 @@ export default function NewSale() {
                                     index
                                   )
                                 }
-                              // onBlur={(e) =>
-                              //   handleProductUnitPrice(
-                              //     product,
-                              //     e.target.value || product.unitPrice,
-                              //     index
-                              //   )
-                              // }
+                                // onBlur={(e) =>
+                                //   handleProductUnitPrice(
+                                //     product,
+                                //     e.target.value || product.unitPrice,
+                                //     index
+                                //   )
+                                // }
                               />
                             </td>
 
@@ -740,8 +769,8 @@ export default function NewSale() {
                                 ৳
                                 {(
                                   product.quantity *
-                                  product.newUnitPrice *
-                                  (1 - product.discount / 100) || 0
+                                    product.newUnitPrice *
+                                    (1 - product.discount / 100) || 0
                                 ).toFixed(2)}
                               </span>
                             </td>
@@ -762,12 +791,12 @@ export default function NewSale() {
                         <label htmlFor="Customer Number">Phone Number</label>
                         <input
                           type="number"
-                          value={customerDetails.customerPhoneNumber || ""}
-                          onChange={(e) => {
-                            setCustomerDetails({
-                              customerPhoneNumber: e.target.value
+                          value={activeSale?.customerPhoneNumber || ""}
+                          onChange={(e) =>
+                            updateSale(activeSaleId, {
+                              customerPhoneNumber: e.target.value,
                             })
-                          }}
+                          }
                         />
                       </div>
 
@@ -775,10 +804,10 @@ export default function NewSale() {
                         <label htmlFor="Customer Name">Customer Name</label>
                         <input
                           type="text"
-                          value={customerDetails.customerName || ""}
+                          value={activeSale?.customerName || ""}
                           onChange={(e) =>
                             !isExistingCustomer &&
-                            setCustomerDetails({
+                            updateSale(activeSaleId, {
                               customerName: e.target.value,
                             })
                           }
@@ -796,10 +825,10 @@ export default function NewSale() {
                         <label htmlFor="Customer Email">Customer Email</label>
                         <input
                           type="email"
-                          value={customerDetails.customerEmail || ""}
+                          value={activeSale?.customerEmail || ""}
                           onChange={(e) =>
                             !isExistingCustomer &&
-                            setCustomerDetails({
+                            updateSale(activeSaleId, {
                               customerEmail: e.target.value,
                             })
                           }
@@ -904,9 +933,14 @@ export default function NewSale() {
                         <label htmlFor="Sold from">Sold from</label>
                         <select
                           className="counterSelect"
-                          value={saleDetails.billingDetails?.soldFrom || "Counter-1"}
+                          value={
+                            activeSale?.billingDetails?.soldFrom || "Counter-1"
+                          }
                           onChange={(e) =>
-                            handleBillingDetailChange("soldFrom", e.target.value)
+                            handleBillingDetailChange(
+                              "soldFrom",
+                              e.target.value
+                            )
                           }
                         >
                           <option value="Counter-1">Counter-1</option>
@@ -920,7 +954,7 @@ export default function NewSale() {
                         <label htmlFor="Bill by">Bill in</label>
                         <select
                           className="billMathodSelect"
-                          value={saleDetails.billingDetails?.billIn || "Cash"}
+                          value={activeSale?.billingDetails?.billIn || "Cash"}
                           onChange={(e) =>
                             handleBillingDetailChange("billIn", e.target.value)
                           }
@@ -934,13 +968,20 @@ export default function NewSale() {
 
                       <div className="cashDetailContainer">
                         <div className="receivedCashAmountContainer">
-                          <label htmlFor="received amount">Received Amount</label>
+                          <label htmlFor="received amount">
+                            Received Amount
+                          </label>
                           <input
                             type="number"
                             placeholder="0"
-                            value={saleDetails.billingDetails?.receivedAmount || ""}
+                            value={
+                              activeSale?.billingDetails?.receivedAmount || ""
+                            }
                             onChange={(e) =>
-                              handleBillingDetailChange("receivedAmount", e.target.value)
+                              handleBillingDetailChange(
+                                "receivedAmount",
+                                e.target.value
+                              )
                             }
                           />
                         </div>
@@ -949,9 +990,14 @@ export default function NewSale() {
                           <input
                             type="number"
                             placeholder="0"
-                            value={saleDetails.billingDetails?.returnAmount || ""}
+                            value={
+                              activeSale?.billingDetails?.returnAmount || ""
+                            }
                             onChange={(e) =>
-                              handleBillingDetailChange("returnAmount", e.target.value)
+                              handleBillingDetailChange(
+                                "returnAmount",
+                                e.target.value
+                              )
                             }
                           />
                         </div>
@@ -966,9 +1012,8 @@ export default function NewSale() {
                     onClick={() => {
                       // console.log("Sale Details:", saleDetails);
                       // Add API call or further logic here
-                      // handleCompleteSaleBtn();
-                      console.log("Sale Details:", saleDetails);
-
+                      handleCompleteSaleBtn();
+                      // console.log("Sale Details:", saleDetails);
                     }}
                   >
                     Complete Sale

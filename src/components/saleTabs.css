@@ -1,0 +1,79 @@
+.sale-tabs-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 8px 0px 0px;
+}
+
+.sale-tab {
+  display: flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 6px 6px 0 0;
+  border: 1px solid rgba(182, 182, 182, 0.596);
+  border-bottom: 1px solid rgb(30, 179, 154);
+  background-color: rgb(255, 255, 255);
+  cursor: pointer;
+  transition: all 0.2s linear;
+  color: #4b5563;
+}
+
+.sale-tab:hover {
+  background-color: #d1d5db;
+}
+
+.sale-tab.active {
+  background-color: rgb(30, 179, 154);
+  border-color: rgb(30, 179, 154);
+  color: white;
+}
+
+.sale-tab-text {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.closeIconContainer {
+  margin-left: 12px;
+  padding: 2px;
+  height: fit-content;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(206, 30, 30, 0.295);
+  cursor: pointer;
+  border-radius: 50px;
+  transition: background-color 0.2s linear;
+}
+
+.close-icon {
+  color: white;
+}
+
+.closeIconContainer:hover {
+  background: rgba(235, 20, 20, 0.959);
+}
+
+.sale-tab:has(.close-icon:hover) {
+  background: rgba(190, 41, 41, 0.349);
+  border: 1px solid rgba(182, 182, 182, 0.596);
+}
+.new-tab-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 9999px;
+  background-color: #e5e7eb;
+  color: #4b5563;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s linear;
+}
+
+.new-tab-button:hover {
+  background-color: #d1d5db;
+}

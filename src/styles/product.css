@@ -1,38 +1,619 @@
 .newSaleContainer {
-  padding: 20px;
+  padding: 0px 20px 20px 20px;
 }
 
-.customerSection,
-.productSection,
-.cartSection,
-.paymentSection {
-  margin-bottom: 20px;
+.newSaleContainer .pageHeader {
+  padding: 0px 10px;
+  background: rgb(30, 179, 154);
+  color: #fafafa;
+  margin-bottom: 10px;
 }
 
-.customerList,
-.productList {
-  border: 1px solid #ccc;
+.medicineSearchContainer {
+  position: relative;
+  display: flex;
+}
+
+.searchbar {
+  width: 80%;
+  height: 30px;
+}
+
+.addNewProductBtnContainer {
+  height: 30px;
+  width: 20%;
+  padding-left: 15px;
+}
+
+.addNewProductBtn {
+  width: 100%;
+  height: 100%;
   padding: 10px;
+  color: whitesmoke;
+  background: rgb(72, 69, 95);
+  border: 1px solid lightgray;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+.addNewProductIcon {
+  font-size: 18px;
+  margin-right: 3px;
 }
 
-.customerItem,
-.productItem {
-  margin: 5px 0;
+.search_result_header {
+  font-size: 18px;
+  font-weight: 400;
+  margin: 15px 0px;
+  text-align: center;
+}
+
+.filteredList {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  background: white;
+  border-radius: 3px;
+  padding: 10px;
+  width: 100%;
+  z-index: 10;
+}
+
+.search_results_container {
+  margin: 0px auto;
+}
+
+.search_result_item {
+  border-bottom: 2px solid #fafafa;
+  padding: 5px 8px 8px;
+  background: rgb(210, 240, 233);
+}
+
+.search_result_header_container {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
-.customerItem.selected {
-  background-color: #d3f4ff;
+.stock_status {
+  font-size: 12px;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: rgb(24, 199, 24);
+  color: rgb(255, 255, 255);
+}
+
+.add_btn {
+  background: rgba(221, 221, 73, 0.801);
+  color: rgb(255, 255, 255);
+  padding: 4px 5px;
+  border-radius: 5px;
+  outline: 0;
+  border: 0;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0px 2px 2px lightgray;
+  transform: scale(1);
+  transition: ease all 0.25s;
+}
+
+.add_btn:hover {
+  background: rgba(197, 197, 68, 0.801);
+}
+
+.add_btn:active {
+  transform: scale(0.95);
+}
+
+.search_result_title_container {
+  display: flex;
+  align-items: center;
+}
+
+.medicine_dosage_icon {
+  height: 20px;
+  margin: 0px 3px;
+}
+
+.medicine_dosage_icon img {
+  height: 100%;
+  width: auto;
+}
+
+.brandName {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.strength {
+  font-size: 16px;
+  font-weight: 500;
+  color: #606060;
+}
+
+.dosageform {
+  font-size: 12px;
+  font-weight: 400;
+  color: #606060;
+  margin-left: 5px;
+}
+
+.genericName {
+  font-size: 14px;
+  font-weight: 500;
+  margin-left: 6px;
+  color: rgb(160, 106, 95);
+  display: flex;
+  align-items: center;
+  text-transform: capitalize;
+}
+
+.medicineType {
+  font-size: 12px;
+  font-weight: 400;
+  color: rgb(14, 172, 35);
+  margin-left: 5px;
+}
+
+.manufacturer {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+  margin-left: 6px;
+  color: rgb(15, 67, 92);
+}
+
+/* //////////////GenericData FIltered List//////////////// */
+
+.genericDataFilteredList {
+  position: absolute;
+  top: 58px;
+  /* bottom: 58px; */
+  left: 0;
+  background: #5dd1be7a;
+  backdrop-filter: blur(5px);
+  border-radius: 3px;
+  padding: 10px;
+  width: 100%;
+  z-index: 10;
+}
+
+.genericName_search_result_item {
+  cursor: pointer;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  transition: background-color 0.2s ease;
+}
+
+.genericName_search_result_item.even {
+  background-color: #e4fdf9;
+}
+
+.genericName_search_result_item.odd {
+  background-color: #f9f9f9;
+}
+
+.genericName_search_result_item:hover {
+  background-color: #c7c7c7;
+}
+
+.genericName_search_result_item p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  text-transform: capitalize;
+  letter-spacing: 0.4px;
+}
+
+.strength-input {
+  position: relative;
+}
+
+.input-overlay-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.overlay-text {
+  position: absolute;
+  top: 50%;
+  left: 11.5px;
+  transform: translateY(-55%);
+  color: #0000008e; /* ghost gray */
+  pointer-events: none;
+  white-space: pre; /* preserve spacing */
+  font-size: 14px;
+  font-weight: 400;
+  font-family: inherit;
+}
+
+.input-overlay-wrapper input {
+  width: 100%;
+  background: transparent;
+  font-family: inherit;
+}
+
+/* ////////////////////////////////////// */
+
+.sectionHeader {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.cartedProductContainer {
+  margin: 10px 0px 0px;
+  padding: 10px;
+  background: white;
+  border-radius: 5px;
+}
+
+.cartedProductBG {
+  /* margin: 10px 0px; */
+  padding: 10px;
+  background: rgb(240, 240, 240);
+  border-radius: 3px;
 }
 
 table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  /* background: rgb(255, 255, 255); */
+  border-radius: 5px !important;
 }
 
 th,
 td {
   padding: 10px;
   border: 1px solid #ccc;
+}
+
+thead {
+  background: rgb(240, 240, 240);
+}
+
+.productInfo {
+  position: relative;
+}
+
+.productInfo .productIndex {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 14px;
+  padding: 2px 2.5px;
+  cursor: pointer;
+  border: none;
+  background: rgb(72, 69, 95);
+  color: white;
+  border-radius: 0px 0px 5px 5px;
+}
+
+.productInfo .dosageform {
+  display: block;
+  /* margin-left: 50px ; */
+}
+
+.productInfo .brandName {
+  font-size: 20px;
+  margin-right: 2px;
+}
+
+.productInfo .strength {
+  font-size: 14px;
+  word-spacing: -2px;
+}
+
+.productInfo .genericName {
+  margin-left: 0px;
+}
+
+.productInfo .manufacturer {
+  max-width: 180px; /* or any width you want */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-left: 0px;
+}
+
+.quantityContainer,
+.unitPriceContainer,
+.expiryDateContainer,
+.batchNoContainer,
+.locationContainer {
+  /* margin: 0; */
+  padding: 0 10px;
+}
+
+.expiryDateInput,
+.quantityInput,
+.unitPriceInput,
+.batchNoInput,
+.locationInput {
+  height: 100%;
+  width: 100%;
+  padding: 10px 10px;
+  font-size: 18px;
+  font-weight: 500;
+  border: none;
+  text-align: center;
+  border-radius: 3px;
+  color: black;
+}
+
+.batchNoInput,
+.expiryDateInput {
+  font-size: 16px;
+  letter-spacing: 0.3px;
+}
+
+.discountContainer {
+  padding: 0 10px;
+}
+
+.discountSelect {
+  height: 100%;
+  width: 100%;
+  padding: 10px 10px;
+  font-size: 18px;
+  font-weight: 500;
+  border: none;
+  border-radius: 3px;
+}
+
+.unitPrice_RemoveBtnContainer {
+  margin: 0;
+  padding: 10px 25px 10px 10px;
+  position: relative;
+}
+
+.removeBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 22px;
+  width: 22px;
+  cursor: pointer;
+  background: rgb(245, 50, 50);
+  border: none;
+  border-radius: 0px 0 0px 5px;
+  /* outline-color: tomato; */
+  /* border-inline-color: tomato; */
+}
+
+.removeIcon {
+  font-size: 18px;
+  color: white;
+}
+
+.totalPrice {
+  padding: 10px 10px;
+  display: flex;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 500;
+  min-width: 110px;
+}
+
+:root {
+  --color-primary: #1eb39a;
+  --color-primary-hover: #17a089;
+  --color-dark: #48455f;
+  --color-light: #ffffff;
+  --color-border: #ccc;
+  --color-border-light: #eee;
+}
+
+/* ------------------------------
+   Modal Styles
+--------------------------------*/
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(72, 69, 95, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  animation: fadeInOverlay 0.2s linear forwards;
+}
+
+.modalOverlay.fadeOut {
+  animation: fadeOutOverlay 0.2s linear forwards;
+}
+
+.modalContent {
+  background: white; /* Or var(--color-light) if you use CSS variables */
+  width: 450px;
+  padding: 24px;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  animation: fadeInModal 0.25s linear forwards;
+}
+
+.modalContent.fadeOut {
+  animation: fadeOutModal 0.25s linear forwards;
+}
+.modalTitle {
+  font-size: 22px;
+  font-weight: bold;
+  color: #48455f;
+  margin-bottom: 10px;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 4px;
+}
+
+.modalTitle::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  background-color: #1eb39a;
+  width: 0%;
+  animation: drawLine 0.4s ease-out forwards;
+  animation-delay: 0.15s; /* small delay after modal starts */
+}
+
+.formRow {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 14px;
+}
+
+.formRow label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-dark);
+  margin-bottom: 5px;
+}
+
+.formRow input {
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.formRow input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 4px rgba(30, 179, 154, 0.3);
+}
+
+.modalButtons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.btn {
+  padding: 8px 14px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s ease;
+}
+
+.primaryBtn {
+  background: var(--color-primary);
+  color: var(--color-light);
+}
+
+.primaryBtn:hover {
+  background: var(--color-primary-hover);
+}
+
+.cancelBtn {
+  background: #ccc;
+  color: #333;
+}
+
+.cancelBtn:hover {
+  background: #b3b3b3;
+}
+
+/* ------------------------------
+   Animation
+--------------------------------*/
+@keyframes fadeInOverlay {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOutOverlay {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeInModal {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOutModal {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+@keyframes drawLine {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* Reload Btn */
+
+.reload-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  background-color: #2563eb;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.reload-btn:hover:not(:disabled) {
+  background-color: #1d4ed8;
+}
+
+.reload-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.reload-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.genericName_search_result_item.selected {
+  background-color: #c7c7c7; /* or your highlight color */
+  color: #000; /* optional */
 }

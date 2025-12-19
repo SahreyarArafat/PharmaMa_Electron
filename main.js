@@ -3,6 +3,7 @@ const path = require("node:path");
 const { exec } = require("child_process");
 const fs = require("fs");
 require("dotenv").config();
+// electron-reload is only for Dev purpuse. So, it should be removed before make a built.
 require("electron-reload")(__dirname, {
   electron: path.join(__dirname, "node_modules", ".bin", "electron"),
 });

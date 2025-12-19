@@ -63,7 +63,7 @@ app.get("/api/invoices/cloud", async (req, res) => {
   }
 });
 
-app.post("/api/invoices/cloud", async (req, res) => {
+app.post("/ap i/invoices/cloud", async (req, res) => {
   try {
     const cloud_db = getCloudDB();
     const invoices = req.body;
@@ -146,6 +146,173 @@ app.patch("/api/invoices/local/update", async (req, res) => {
   } catch (error) {
     console.error("Error updating local invoices:", error);
     res.status(500).json({ error: "Failed to update invoices" });
+  }
+});
+
+// Post inventory Products
+
+// Post Products
+app.post("/api/inventory_products/local", async (req, res) => {
+  try {
+    const local_db = getLocalDB();
+    const products = req.body;
+
+    const result = await local_db
+      .collection("inventory_products")
+      .insertMany(products);
+    res.status(201).json({ message: "Products added successfully", result });
+  } catch (error) {
+    console.error("❌ Insert error:", error);
+
+    // ⚠️ Duplicate KEY error?
+    if (error.code === 11000) {
+      const duplicatedProduct = error.writeErrors?.[0]?.err?.op; // Full product object
+      const duplicatedKey = error.keyValue; // e.g. { brandName: "Napa", strength: "500 mg", dosageForm: "Tablet" }
+
+      return res.status(409).json({
+        message: "Duplicate product found",
+        duplicatedKey,
+        duplicatedProduct,
+      });
+    }
+
+    res.status(500).json({ error: "Failed to add products" });
+  }
+});
+
+// Post a single product
+app.post("/api/PharmaMa_brand_data/local", async (req, res) => {
+  try {
+    const local_db = getLocalDB();
+    const product = req.body;
+
+    // if (!product || typeof product !== "object") {
+    //   return res.status(400).json({ message: "Invalid product data" });
+    // }
+
+    const result = await local_db
+      .collection("PharmaMa_brand_data")
+      .insertOne(product);
+    res.status(201).json({ message: "Product added successfully", result });
+  } catch (error) {
+    console.error("Error posting product:", error);
+    res.status(500).json({ error: "Failed to add product" });
+  }
+});
+
+// GET all products
+app.get("/api/PharmaMa_brand_data/local", async (req, res) => {
+  try {
+    const local_db = getLocalDB();
+    const products = await local_db
+      .collection("PharmaMa_brand_data")
+      .find()
+      .toArray();
+    res.json(products);
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// GET Medicine Generic Data
+app.get("/api/PharmaMa_generic_data/local", async (req, res) => {
+  try {
+    const local_db = getLocalDB();
+    const PharmaMa_generic_data = await local_db
+      .collection("PharmaMa_generic_data")
+      .find()
+      .toArray();
+    res.json(PharmaMa_generic_data);
+  } catch (error) {
+    console.error("Error fetching Medicine Generic Dta:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// Post Medicine Generic Data
+app.post("/api/PharmaMa_generic_data/local", async (req, res) => {
+  try {
+    const local_db = getLocalDB();
+    const NewGenericData = req.body;
+
+    const result = await local_db
+      .collection("PharmaMa_generic_data")
+      .insertOne(NewGenericData);
+    res
+      .status(201)
+      .json({ message: "New Generic Data added successfully", result });
+  } catch (error) {
+    console.error("Error posting NewGenericData:", error);
+    res.status(500).json({ error: "Failed to add NewGenericData" });
+  }
+});
+
+// GET Medicine Dosage Forms
+
+app.get("/api/PharmaMa_dosage_form_data/local", async (req, res) => {
+  try {
+    const local_db = getLocalDB();
+    const PharmaMa_dosage_form_data = await local_db
+      .collection("PharmaMa_dosage_form_data")
+      .find()
+      .toArray();
+    res.json(PharmaMa_dosage_form_data);
+  } catch (error) {
+    console.error("Error fetching Medicine Dosage Forms:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// Post Medicine Dosage Form
+app.post("/api/PharmaMa_dosage_form_data/local", async (req, res) => {
+  try {
+    const local_db = getLocalDB();
+    const NewDosageForm = req.body;
+
+    const result = await local_db
+      .collection("PharmaMa_dosage_form_data")
+      .insertOne(NewDosageForm);
+    res
+      .status(201)
+      .json({ message: "New Dosage Form added successfully", result });
+  } catch (error) {
+    console.error("Error posting New Dosage Form:", error);
+    res.status(500).json({ error: "Failed to add NewDosageForm" });
+  }
+});
+
+// GET Companies Data
+
+app.get("/api/PharmaMa_companies_data/local", async (req, res) => {
+  try {
+    const local_db = getLocalDB();
+    const PharmaMa_companies_data = await local_db
+      .collection("PharmaMa_companies_data")
+      .find()
+      .toArray();
+    res.json(PharmaMa_companies_data);
+  } catch (error) {
+    console.error("Error fetching Companies Data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// Post Company Data
+app.post("/api/PharmaMa_companies_data/local", async (req, res) => {
+  try {
+    const local_db = getLocalDB();
+    const NewCompanyData = req.body;
+
+    const result = await local_db
+      .collection("PharmaMa_companies_data")
+      .insertOne(NewCompanyData);
+    res
+      .status(201)
+      .json({ message: "NewCompanyData added successfully", result });
+  } catch (error) {
+    console.error("Error posting NewCompanyData:", error);
+    res.status(500).json({ error: "Failed to add NewCompanyData" });
   }
 });
 
