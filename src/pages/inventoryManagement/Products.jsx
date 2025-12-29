@@ -14,6 +14,7 @@ import {
   postLocalPharmaMaNewDosageForm,
   postLocalPharmaMaNewCompanyData,
   postLocalPharmaMaNewBrandData,
+  updateLocalPharmaMaBrandDataUnitPrices,
 } from "../../services/localPharmaMaDataSearchService.js";
 
 import { postLocalInventoryProductsData } from "../../services/localInventorySearchService.js";
@@ -243,6 +244,7 @@ const Products = () => {
 
           return {
             ...p,
+            unitPrice: formatedPrice,
             batches: newBatches,
             stock: totalStock,
           };
@@ -265,7 +267,7 @@ const Products = () => {
         ...(activeSale.productDetails || []),
         {
           ...product,
-          // unitPrice: formatedPrice,
+          unitPrice: formatedPrice,
           batches: initialBatches,
           stock: 1, // since there's only 1 quantity in the initial batch
         },
@@ -348,8 +350,6 @@ const Products = () => {
     productIndex,
     batchIndex
   ) => {
-    console.log(newExpiryDate);
-
     const productKey = generateUniqueKey(product, productIndex);
 
     const updatedProducts = (activeSale.productDetails || []).map((p, idx) => {
@@ -462,6 +462,7 @@ const Products = () => {
 
         return {
           ...p,
+          unitPrice: newUnitPrice === "" ? "" : parseFloat(newUnitPrice),
           batches: updatedBatches,
         };
       }
@@ -529,10 +530,20 @@ const Products = () => {
     }
 
     try {
-      const result = await postLocalInventoryProductsData(
+      // const result = await postLocalInventoryProductsData(
+      //   activeProductList.productDetails
+      // );
+      // console.log("✅ Products list posted:", result);
+
+      // 1️⃣ Post inventory products
+      await postLocalInventoryProductsData(activeProductList.productDetails);
+
+      // 2️⃣ Update brand prices
+      await updateLocalPharmaMaBrandDataUnitPrices(
         activeProductList.productDetails
       );
-      console.log("✅ Products list posted:", result);
+
+      console.log("✅ Inventory + PharmaMa brand prices updated");
     } catch (error) {
       console.error("❌ Failed to post products list:", error);
     }
@@ -630,6 +641,7 @@ const Products = () => {
         brandName: "",
         dosageform: "",
         genericName: "",
+        packSize: "",
         strength: "",
         manufacturer: "",
         marketer: "",
@@ -771,6 +783,9 @@ const Products = () => {
                                       >
                                         {product.manufacturer}
                                       </p>
+                                      <span className="strength">
+                                        Pack size: <b>{product.packSize}</b>
+                                      </span>
                                     </>
                                   )}
                                 </td>

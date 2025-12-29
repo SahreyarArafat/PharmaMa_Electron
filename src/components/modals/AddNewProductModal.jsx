@@ -151,6 +151,17 @@ const AddNewProductModal = ({
           placeholder="Search Dosage Form..."
         />
 
+        <div className="formRow">
+          <label>Pack Size</label>
+          <input
+            type="text"
+            value={newProduct.packSize}
+            onChange={(e) =>
+              setNewProduct({ ...newProduct, packSize: e.target.value })
+            }
+          />
+        </div>
+
         <SearchableListInput
           label="Manufacturer"
           value={newProduct.manufacturer}

@@ -31,6 +31,25 @@ export const postLocalPharmaMaNewBrandData = async (newProduct) => {
   }
 };
 
+export const updateLocalPharmaMaBrandDataUnitPrices = async (products) => {
+  const res = await fetch(
+    `${BASE_URL}/api/PharmaMa_brand_data/local/update_unit_prices`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ products }),
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to update brand prices");
+  }
+
+  return res.json();
+};
+
 //////////////////////////////
 // getLocalMedicinesGenericData
 export const getLocalPharmaMaGenericData = async () => {
