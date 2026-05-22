@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import { FixedSizeList as List } from "react-window";
 
 import "../../styles/product.css";
+import Required from "../required";
 
 const AddNewProductModal = ({
   show,
@@ -18,6 +19,8 @@ const AddNewProductModal = ({
   dosageFormSearch,
   genericFilteredData,
   genericNameSearch,
+  isDuplicate,
+  isFormInvalid,
 }) => {
   // New Product Manufacturer Input Handler
   const handleNewProductManufacturerInput = (text) => {
@@ -80,10 +83,13 @@ const AddNewProductModal = ({
         <h2 className="modalTitle">Add New Product</h2>
 
         <div className="formRow">
-          <label>Brand Name</label>
+          <label>
+            Brand Name <Required />
+          </label>
           <input
             type="text"
             value={newProduct.brandName}
+            placeholder="e.g. Napa Extra"
             onChange={(e) =>
               setNewProduct({ ...newProduct, brandName: e.target.value })
             }
@@ -92,6 +98,7 @@ const AddNewProductModal = ({
 
         <SearchableListInput
           label="Generic Name"
+          placeholder="e.g. Paracetamol + Caffeine"
           value={newProduct.genericName}
           items={genericFilteredData.map((g) => ({
             label: g.genericName,
@@ -99,48 +106,24 @@ const AddNewProductModal = ({
           }))}
           onChange={(text) => handleMedicineGenericNameSearchInput(text)}
           onSelect={(item) => handleAddGenericName(item.label)}
-          placeholder="Search generic name..."
         />
 
-        <div className="formRow strength-input">
+        <div className="formRow">
           <label>Strength</label>
-          <div className="input-overlay-wrapper">
-            {/* Ghost text (value + mg) */}
-
-            {newProduct.strength &&
-              !newProduct.strength.toLowerCase().includes("mg") && (
-                <span className="overlay-text">{newProduct.strength} mg</span>
-              )}
-
-            <input
-              type="text"
-              value={newProduct.strength}
-              onChange={(e) =>
-                setNewProduct({ ...newProduct, strength: e.target.value })
-              }
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-
-                  let strengthValue = newProduct.strength.trim();
-
-                  if (
-                    strengthValue &&
-                    !strengthValue.toLowerCase().endsWith("mg")
-                  ) {
-                    setNewProduct({
-                      ...newProduct,
-                      strength: strengthValue + " mg",
-                    });
-                  }
-                }
-              }}
-            />
-          </div>
+          <input
+            type="text"
+            placeholder="e.g. 500mg or 5ml/10mg"
+            value={newProduct.strength}
+            onChange={(e) =>
+              setNewProduct({ ...newProduct, strength: e.target.value })
+            }
+          />
         </div>
 
         <SearchableListInput
           label="Dosage Form"
+          placeholder="e.g. Tablet, Syrup..."
+          isRequired={true}
           value={newProduct.dosageform}
           items={dosageFormFilteredData.map((item) => ({
             label: item.name,
@@ -148,12 +131,12 @@ const AddNewProductModal = ({
           }))}
           onChange={(text) => handleMedicineDoageFormInput(text)}
           onSelect={(item) => handleAddMedicineDosageForm(item.label)}
-          placeholder="Search Dosage Form..."
         />
 
         <div className="formRow">
           <label>Pack Size</label>
           <input
+            placeholder="e.g. 10 * 10, 200 ml"
             type="text"
             value={newProduct.packSize}
             onChange={(e) =>
@@ -164,6 +147,8 @@ const AddNewProductModal = ({
 
         <SearchableListInput
           label="Manufacturer"
+          placeholder="e.g. Aristopharma Ltd."
+          isRequired={newProduct.marketer === "" ? true : false}
           value={newProduct.manufacturer}
           items={companyFilteredData.map((c) => ({
             label: c.companyName,
@@ -171,11 +156,12 @@ const AddNewProductModal = ({
           }))}
           onChange={(text) => handleNewProductManufacturerInput(text)}
           onSelect={(item) => handleAddNewProductManufacturer(item.label)}
-          placeholder="Search manufacturer..."
         />
 
         <SearchableListInput
           label="Marketer"
+          placeholder=" e.g. Discount Pharma"
+          isRequired={newProduct.manufacturer === "" ? true : false}
           value={newProduct.marketer}
           items={companyFilteredData.map((c) => ({
             label: c.companyName,
@@ -183,32 +169,58 @@ const AddNewProductModal = ({
           }))}
           onChange={(text) => handleNewProductMarketerInput(text)}
           onSelect={(item) => handleAddNewProductMarketer(item.label)}
-          placeholder="Search Marketer..."
         />
 
         <div className="formRow">
-          <label>Unit Price</label>
+          <label>
+            Unit Price <Required />
+          </label>
           <input
             type="number"
             value={newProduct.unitPrice}
             onChange={(e) =>
               setNewProduct({
                 ...newProduct,
-                unitPrice: parseFloat(e.target.value) || 0,
+                unitPrice: e.target.value || "",
+              })
+            }
+            onBlur={(e) =>
+              setNewProduct({
+                ...newProduct,
+                unitPrice: Number(e.target.value) || 0,
               })
             }
           />
         </div>
 
+        {isDuplicate && (
+          <div className="warning">
+            <span className="warningIcon">⚠️</span>
+            <p className="warningText">
+              This product already exists in PharmaMa Brand Data.
+              <br />
+              Please use the existing product.
+            </p>
+          </div>
+        )}
+
         <div className="modalButtons">
           <button className="btn cancelBtn" onClick={handleCloseModal}>
             Cancel
           </button>
+
           <button
-            className="btn primaryBtn"
+            className={`btn primaryBtn ${
+              isDuplicate || isFormInvalid ? "disabledBtn" : ""
+            }`}
+            disabled={isDuplicate || isFormInvalid}
             onClick={handleSubmitNewProductBtn}
           >
-            Add Product
+            {isDuplicate
+              ? "Product Already Exists"
+              : isFormInvalid
+              ? "Fill Required Fields"
+              : "Add Product"}
           </button>
         </div>
       </div>
@@ -218,6 +230,7 @@ const AddNewProductModal = ({
 
 function SearchableListInput({
   label,
+  isRequired,
   value,
   items = [],
   onChange,
@@ -328,7 +341,11 @@ function SearchableListInput({
       style={{ position: "relative" }}
       ref={containerRef}
     >
-      {label && <label>{label}</label>}
+      {label && (
+        <label>
+          {label} {isRequired && <Required />}
+        </label>
+      )}
       <input
         type="text"
         value={value || ""}

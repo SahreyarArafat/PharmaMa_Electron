@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.json()); // To parse JSON payloads
 
 const PORT = process.env.PORT || 5000;
-const BASE_URL = process.env.API_BASE_URL || `http://localhost:${PORT}`;
+const BASE_URL = process.env.API_BASE_URL || `http://192.168.0.229:${PORT}` || `http://192.168.10.1:${PORT}`;
 
 // Connect to both local and cloud MongoDB before starting the server
 connectCloudDB(); // Connect to cloud database
@@ -63,7 +63,7 @@ app.get("/api/invoices/cloud", async (req, res) => {
   }
 });
 
-app.post("/ap i/invoices/cloud", async (req, res) => {
+app.post("/api/invoices/cloud", async (req, res) => {
   try {
     const cloud_db = getCloudDB();
     const invoices = req.body;
@@ -149,140 +149,46 @@ app.patch("/api/invoices/local/update", async (req, res) => {
   }
 });
 
+// Get inventory Products
+
+app.get("/api/inventory_products/local", async (req, res) => {
+  try {
+    const local_db = getLocalDB();
+    const products = await local_db
+      .collection("inventory_products")
+      .find()
+      .toArray();
+    res.json(products);
+  } catch (error) {
+    console.error("Error fetching inventory products data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 // Post inventory Products
-
-// Post Products
-// app.post("/api/inventory_products/local", async (req, res) => {
-//   try {
-//     const local_db = getLocalDB();
-//     const products = req.body;
-
-//     const result = await local_db
-//       .collection("inventory_products")
-//       .insertMany(products);
-//     res.status(201).json({ message: "Products added successfully", result });
-//   } catch (error) {
-//     console.error("❌ Insert error:", error);
-
-//     // ⚠️ Duplicate KEY error?
-//     if (error.code === 11000) {
-//       const duplicatedProduct = error.writeErrors?.[0]?.err?.op; // Full product object
-//       const duplicatedKey = error.keyValue; // e.g. { brandName: "Napa", strength: "500 mg", dosageForm: "Tablet" }
-
-//       return res.status(409).json({
-//         message: "Duplicate product found",
-//         duplicatedKey,
-//         duplicatedProduct,
-//       });
-//     }
-
-//     res.status(500).json({ error: "Failed to add products" });
-//   }
-// });
-
-/////////////////////////////
-
-// const normalizeBatches = (batches = []) =>
-//   batches.map((b) => ({
-//     ...b,
-//     batchKey: `${b.batchNo}|${b.expiry}`,
-//     quantity: Number(b.quantity || 0),
-//   }));
-
-// app.post("/api/inventory_products/local", async (req, res) => {
-//   try {
-//     const local_db = getLocalDB();
-//     const products = req.body;
-
-//     if (!Array.isArray(products)) {
-//       return res.status(400).json({ message: "Products must be an array" });
-//     }
-
-//     for (const product of products) {
-//       const batches = normalizeBatches(product.batches || []);
-
-//       for (const batch of batches) {
-//         // 1️⃣ Try to increase quantity if batch exists
-//         const updateExisting = await local_db
-//           .collection("inventory_products")
-//           .updateOne(
-//             {
-//               brandAndStrength: product.brandAndStrength,
-//               dosageform: product.dosageform,
-//               "batches.batchKey": batch.batchKey,
-//             },
-//             {
-//               $inc: {
-//                 "batches.$.quantity": batch.quantity,
-//                 stock: batch.quantity,
-//               },
-//             }
-//           );
-
-//         // 2️⃣ If batch did NOT exist → push new batch
-//         if (updateExisting.matchedCount === 0) {
-//           await local_db.collection("inventory_products").updateOne(
-//             {
-//               brandAndStrength: product.brandAndStrength,
-//               dosageform: product.dosageform,
-//             },
-//             {
-//               $push: { batches: batch },
-//               $inc: { stock: batch.quantity },
-//               $setOnInsert: {
-//                 medicinePackImage: product.medicinePackImage,
-//                 brandName: product.brandName,
-//                 genericName: product.genericName,
-//                 strength: product.strength,
-//                 manufacturer: product.manufacturer,
-//                 marketer: product.marketer,
-//                 unitPrice: product.unitPrice,
-//                 brandAndStrength: product.brandAndStrength,
-//                 dosageform: product.dosageform,
-//                 createdAt: new Date(),
-//               },
-//             },
-//             { upsert: true }
-//           );
-//         }
-//       }
-//     }
-
-//     res.status(200).json({
-//       message: "Inventory updated successfully",
-//     });
-//   } catch (error) {
-//     console.error("❌ Inventory update failed:", error);
-//     res.status(500).json({
-//       error: "Inventory update failed",
-//       details: error.message,
-//     });
-//   }
-// });
-
-////////////////////////////////////////
 
 app.post("/api/inventory_products/local", async (req, res) => {
   try {
     const local_db = getLocalDB();
     const products = req.body;
 
-    if (!Array.isArray(products)) {
-      return res.status(400).json({ message: "Products must be an array" });
-    }
+    // if (!Array.isArray(products)) {
+    //   return res.status(400).json({ message: "Products must be an array" });
+    // }
 
     const operations = products.map((product) => {
       const incomingBatches = product.batches || [];
       const incomingStock = incomingBatches.reduce(
         (sum, b) => sum + Number(b.quantity || 0),
-        0
+        0,
       );
 
       return {
         updateOne: {
           filter: {
-            brandAndStrength: product.brandAndStrength,
-            dosageform: product.dosageform,
+            // brandAndStrength: product.brandAndStrength,
+            // dosageform: product.dosageform,
+            variantId: product.variantId,
           },
           update: {
             // ✅ Always add batches
@@ -295,16 +201,18 @@ app.post("/api/inventory_products/local", async (req, res) => {
 
             // ✅ Only on first insert
             $setOnInsert: {
-              medicinePackImage: product.medicinePackImage,
-              brandName: product.brandName,
-              genericName: product.genericName,
-              strength: product.strength,
-              manufacturer: product.manufacturer,
-              marketer: product.marketer,
-              unitPrice: product.unitPrice,
-              brandAndStrength: product.brandAndStrength,
-              dosageform: product.dosageform,
-              createdAt: new Date(),
+              variantId: product.variantId,
+              medicinePackImage: product.medicinePackImage || null,
+              brandName: product.brandName || "",
+              genericName: product.genericName || "",
+              strength: product.strength || "",
+              manufacturer: product.manufacturer || "",
+              marketer: product.marketer || null,
+              packSize: product.packSize || "",
+              unitPrice: product.unitPrice || 0,
+              brandAndStrength: product.brandAndStrength || "",
+              dosageform: product.dosageform || "",
+              createdAt: new Date().toISOString(),
             },
           },
           upsert: true,
@@ -346,51 +254,81 @@ app.post("/api/PharmaMa_brand_data/local", async (req, res) => {
   }
 });
 
-// Update PharmaMa brand data unitPrice
-app.patch(
-  "/api/PharmaMa_brand_data/local/update_unit_prices",
-  async (req, res) => {
-    try {
-      const local_db = getLocalDB();
-      const { products } = req.body;
+// Update PharmaMa brand data unitPrice, packSize and update time
+app.patch("/api/PharmaMa_brand_data/local/update", async (req, res) => {
+  try {
+    const local_db = getLocalDB();
+    const { products } = req.body;
 
-      if (!Array.isArray(products) || products.length === 0) {
-        return res.status(400).json({
-          message: "products must be a non-empty array",
-        });
-      }
+    if (!Array.isArray(products) || products.length === 0) {
+      return res.status(400).json({
+        message: "products must be a non-empty array",
+      });
+    }
 
-      const bulkOps = products.map((item) => ({
+    const collection = local_db.collection("PharmaMa_brand_data");
+
+    const bulkOps = [];
+
+    for (const item of products) {
+      if (!item.variantId) continue; // 🔐 safety
+
+      const existing = await collection.findOne({
+        variantId: item.variantId,
+      });
+
+      if (!existing) continue;
+
+      const incomingPrice = Number(item.unitPrice) || 0;
+      const existingPrice = Number(existing.unitPrice || 0);
+
+      const incomingPackSize = item.packSize ?? "";
+      const existingPackSize = existing.packSize ?? "";
+
+      const hasPriceChanged = incomingPrice !== existingPrice;
+      const hasPackSizeChanged = incomingPackSize !== existingPackSize;
+
+      // 🚀 OPTIMIZATION: skip if nothing changed
+      if (!hasPriceChanged && !hasPackSizeChanged) continue;
+
+      bulkOps.push({
         updateOne: {
-          filter: {
-            brandName: item.brandName,
-            strength: item.strength,
-            dosageform: item.dosageform,
-          },
+          filter: { variantId: item.variantId },
           update: {
             $set: {
-              unitPrice: Number(item.unitPrice) || 0, // ✅ ONLY THIS
-              updatedAt: new Date(), // ✅ AND THIS
+              ...(hasPriceChanged && {
+                unitPrice: incomingPrice,
+              }),
+              ...(hasPackSizeChanged && {
+                packSize: incomingPackSize,
+              }),
+              updatedAt: new Date().toISOString(),
             },
           },
         },
-      }));
-
-      const result = await local_db
-        .collection("PharmaMa_brand_data")
-        .bulkWrite(bulkOps);
-
-      res.json({
-        message: "unitPrice updated successfully",
-        matchedCount: result.matchedCount,
-        modifiedCount: result.modifiedCount,
       });
-    } catch (error) {
-      console.error("Error updating unitPrice:", error);
-      res.status(500).json({ error: "Failed to update unitPrice" });
     }
+
+    // 🚫 No changes → no write
+    if (bulkOps.length === 0) {
+      return res.json({
+        message: "No changes detected. Brand data untouched.",
+        modifiedCount: 0,
+      });
+    }
+
+    const result = await collection.bulkWrite(bulkOps);
+
+    res.json({
+      message: "PharmaMa brand data updated successfully",
+      matchedCount: result.matchedCount,
+      modifiedCount: result.modifiedCount,
+    });
+  } catch (error) {
+    console.error("Error updating PharmaMa brand data:", error);
+    res.status(500).json({ error: "Failed to update brand data" });
   }
-);
+});
 
 // GET all products
 app.get("/api/PharmaMa_brand_data/local", async (req, res) => {
@@ -563,3 +501,5 @@ app.get("/api/customers/local/phone/:phone", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`✅ Server running at ${BASE_URL}`);
 });
+
+

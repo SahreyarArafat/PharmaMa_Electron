@@ -1,0 +1,638 @@
+[
+  {
+    "companyName": "ACI Limited"
+  },
+  {
+    "companyName": "ACME Laboratories Ltd."
+  },
+  {
+    "companyName": "Ad-din Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Aexim Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Al-Madina Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Albion Laboratories Limited"
+  },
+  {
+    "companyName": "Alco Pharma Ltd."
+  },
+  {
+    "companyName": "Alien Pharma"
+  },
+  {
+    "companyName": "Alkad Laboratories"
+  },
+  {
+    "companyName": "Allied Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Ambee Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Amico Laboratories Ltd."
+  },
+  {
+    "companyName": "Amulet Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "APC Pharma Ltd."
+  },
+  {
+    "companyName": "Apex Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Apollo Pharmaceutical Ltd."
+  },
+  {
+    "companyName": "AqVida bangladesh"
+  },
+  {
+    "companyName": "Arges Life Science Limited"
+  },
+  {
+    "companyName": "Aristopharma Ltd."
+  },
+  {
+    "companyName": "Army Pharma Limited"
+  },
+  {
+    "companyName": "Asiatic Laboratories Ltd."
+  },
+  {
+    "companyName": "Astra Biopharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Avarox Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Aztec Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Beacon Pharmaceuticals PLC"
+  },
+  {
+    "companyName": "Beauty Formulas"
+  },
+  {
+    "companyName": "Belsen Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Bengal drugs Ltd."
+  },
+  {
+    "companyName": "Benham Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Beximco Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Bexter Pharmaceuticals"
+  },
+  {
+    "companyName": "Biocell Ayurvedic Limited"
+  },
+  {
+    "companyName": "Biogen Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Biopharma Limited"
+  },
+  {
+    "companyName": "BOTS Pvt. Limited"
+  },
+  {
+    "companyName": "Bright HealthCare"
+  },
+  {
+    "companyName": "Bristol Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Bronson  Laboratories (BD) Ltd."
+  },
+  {
+    "companyName": "C2C Pharma Ltd."
+  },
+  {
+    "companyName": "Centeon Pharma Ltd."
+  },
+  {
+    "companyName": "Central Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Chemist Laboratories  Ltd."
+  },
+  {
+    "companyName": "City Overseas Ltd."
+  },
+  {
+    "companyName": "Concord Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Cosmic Pharma Ltd."
+  },
+  {
+    "companyName": "Cosmo Pharma Laboratories Ltd."
+  },
+  {
+    "companyName": "Credence Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "CuRx"
+  },
+  {
+    "companyName": "DBL Healthcare Ltd."
+  },
+  {
+    "companyName": "DBL Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Decent Pharma Laboratories Ltd."
+  },
+  {
+    "companyName": "Delta Pharma Ltd."
+  },
+  {
+    "companyName": "Derma Health Care"
+  },
+  {
+    "companyName": "Desh Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Discount Pharma"
+  },
+  {
+    "companyName": "Diva’s Secret"
+  },
+  {
+    "companyName": "Doctor TIMS Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Doctor’s Chemical Works Ltd."
+  },
+  {
+    "companyName": "Dr Rhazes"
+  },
+  {
+    "companyName": "Drug International Ltd."
+  },
+  {
+    "companyName": "Edruc Limited"
+  },
+  {
+    "companyName": "EMCS Pharma Limited"
+  },
+  {
+    "companyName": "EMPECS Medical Device Co., Ltd."
+  },
+  {
+    "companyName": "Empiric Laboratories Ltd."
+  },
+  {
+    "companyName": "Ergon Pharmaceuticals (AY)"
+  },
+  {
+    "companyName": "Eskayef Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Ethical Drugs Limited"
+  },
+  {
+    "companyName": "Euro Pharma Ltd."
+  },
+  {
+    "companyName": "Everest Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "FnF Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Gaco Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "General Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Genvio Pharma Ltd."
+  },
+  {
+    "companyName": "Get Well Limited"
+  },
+  {
+    "companyName": "GlaxoSmithKline Pharmaceuticals"
+  },
+  {
+    "companyName": "Globe Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Globex Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Gonoshasthaya Pharma Ltd."
+  },
+  {
+    "companyName": "Goodman Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Green Laboratories (Unani)"
+  },
+  {
+    "companyName": "Greenland Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Guardian Healthcare Ltd."
+  },
+  {
+    "companyName": "Hallmark Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Healthcare Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Herbex & co (Unani)"
+  },
+  {
+    "companyName": "Hudson Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Ibn Sina Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Incepta Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Indo Bangla Pharmaceutical"
+  },
+  {
+    "companyName": "Institute of Public Health (IPH)"
+  },
+  {
+    "companyName": "International Agencies (Bd.) Limited"
+  },
+  {
+    "companyName": "Janata Traders"
+  },
+  {
+    "companyName": "Jayson Natural Products Ltd."
+  },
+  {
+    "companyName": "Jayson Pharmaceutical Ltd."
+  },
+  {
+    "companyName": "Jenphar Bangladesh Ltd."
+  },
+  {
+    "companyName": "JMI Syringes & Medical Devices Ltd."
+  },
+  {
+    "companyName": "Kawsar Chemicals"
+  },
+  {
+    "companyName": "Kemiko Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Kumudini Pharma Ltd."
+  },
+  {
+    "companyName": "Labaid Pharma Ltd."
+  },
+  {
+    "companyName": "Leon Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Lexicon Pharma"
+  },
+  {
+    "companyName": "Libra Infusions Ltd."
+  },
+  {
+    "companyName": "Libra Pharmaceuticls Ltd."
+  },
+  {
+    "companyName": "Maks Drug Limited"
+  },
+  {
+    "companyName": "Marie Stopes Bangladesh"
+  },
+  {
+    "companyName": "Marker Pharma Ltd."
+  },
+  {
+    "companyName": "Marksman Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Medicon Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Medimet Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "MedRx Life Science Ltd."
+  },
+  {
+    "companyName": "MGH Healthcare Limited"
+  },
+  {
+    "companyName": "Microlife Corporation"
+  },
+  {
+    "companyName": "MicroMed"
+  },
+  {
+    "companyName": "Millat Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Modern Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Momotaz Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Monicopharma Ltd."
+  },
+  {
+    "companyName": "MST Pharma"
+  },
+  {
+    "companyName": "Mundipharma (BD) Pvt. Ltd."
+  },
+  {
+    "companyName": "Mystic Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Naafco Pharma Ltd."
+  },
+  {
+    "companyName": "National Drug Co. Ltd."
+  },
+  {
+    "companyName": "Navana Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "NEMUS Pharmaceutical Pvt. Ltd."
+  },
+  {
+    "companyName": "Nipa Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "NIPRO"
+  },
+  {
+    "companyName": "NIPRO JMI Pharma Ltd."
+  },
+  {
+    "companyName": "Novartis (Bangladesh) Ltd."
+  },
+  {
+    "companyName": "Novatek Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Novelta Bestway Pharma Ltd."
+  },
+  {
+    "companyName": "Novo Healthcare and Pharma Ltd."
+  },
+  {
+    "companyName": "Novo Nordisk Pharma (Pvt.) Ltd"
+  },
+  {
+    "companyName": "Novus Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Nutrilife Pharma"
+  },
+  {
+    "companyName": "Nuvista Pharma Ltd."
+  },
+  {
+    "companyName": "One Pharma Ltd."
+  },
+  {
+    "companyName": "Opsonin Herbal & Nutraceuticals Ltd."
+  },
+  {
+    "companyName": "Opsonin Pharma Ltd."
+  },
+  {
+    "companyName": "Orion Infusion Ltd."
+  },
+  {
+    "companyName": "Orion Pharma Ltd."
+  },
+  {
+    "companyName": "OSL Pharma Limited"
+  },
+  {
+    "companyName": "Oyster Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Pacific Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Peoples Pharma Ltd."
+  },
+  {
+    "companyName": "Pfizer"
+  },
+  {
+    "companyName": "Pharmacil Limited"
+  },
+  {
+    "companyName": "Pharmadesh Laboratories Ltd."
+  },
+  {
+    "companyName": "Pharmasia Limited"
+  },
+  {
+    "companyName": "Pharmik Laboratories Ltd."
+  },
+  {
+    "companyName": "Physic pharmaceuticals ltd."
+  },
+  {
+    "companyName": "Popular Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Premier Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Prime Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Pristine Pharmaceuticals Ltd"
+  },
+  {
+    "companyName": "Purnava Limited"
+  },
+  {
+    "companyName": "Quality Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Radiant Export Import Enterprise"
+  },
+  {
+    "companyName": "Radiant Nutraceuticals Ltd."
+  },
+  {
+    "companyName": "Radiant Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Radius Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Rangs Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Reckitt & Benckiser Ltd."
+  },
+  {
+    "companyName": "Reliance Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Reman Drug Laboratories Ltd."
+  },
+  {
+    "companyName": "Remark HB Limited (Remark LLC.)"
+  },
+  {
+    "companyName": "Renata PLC"
+  },
+  {
+    "companyName": "Rephco Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "River Pharma"
+  },
+  {
+    "companyName": "RN Pharmaceuticals"
+  },
+  {
+    "companyName": "Roche Bangladesh Ltd."
+  },
+  {
+    "companyName": "Royal Pharmaceutical Ltd."
+  },
+  {
+    "companyName": "S.N. Pharmaceutical Ltd."
+  },
+  {
+    "companyName": "Salton Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "SANDOZ (A Novartis Division)"
+  },
+  {
+    "companyName": "Save Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Seema Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "SEKO Laboratories (Unani)"
+  },
+  {
+    "companyName": "Servier Bangladesh Operation"
+  },
+  {
+    "companyName": "Sharif Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "SHINIL Pharma Limited"
+  },
+  {
+    "companyName": "Shuvro Limited"
+  },
+  {
+    "companyName": "Silco Pharmaceutical Ltd."
+  },
+  {
+    "companyName": "Silva Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Skylab Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "SMC Enterprise Ltd"
+  },
+  {
+    "companyName": "Somatec Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Sonear Laboratories Ltd."
+  },
+  {
+    "companyName": "Square Pharmaceuticals PLC"
+  },
+  {
+    "companyName": "Sun Pharmaceutical (Bangladesh) Ltd."
+  },
+  {
+    "companyName": "Sunman-Birdem Pharma Ltd."
+  },
+  {
+    "companyName": "Supreme Pharmaceutical Ltd."
+  },
+  {
+    "companyName": "Synovia Pharma PLC."
+  },
+  {
+    "companyName": "Syntho Laboratories Ltd."
+  },
+  {
+    "companyName": "Team Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Techno Drugs Ltd."
+  },
+  {
+    "companyName": "The White Horse Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Total Herbal & Nutraceuticals"
+  },
+  {
+    "companyName": "Total Natural Company (Unani)"
+  },
+  {
+    "companyName": "Ultra Pharma Ltd."
+  },
+  {
+    "companyName": "UNIDO Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "UniMed UniHealth Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Union Pharmaceuticals Ltd"
+  },
+  {
+    "companyName": "Unique Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "United Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Veritas Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Virgo Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Walmart pharma Ltd."
+  },
+  {
+    "companyName": "West-Coast pharmaceutical works ltd."
+  },
+  {
+    "companyName": "ZAS Corporation"
+  },
+  {
+    "companyName": "Zenith Pharmaceuticals Ltd."
+  },
+  {
+    "companyName": "Ziska Pharmaceuticals Ltd."
+  }
+]

@@ -25,7 +25,7 @@ export default function Navbar() {
       icon: <BsBoxSeam />,
       title: "Inventory Management",
       subItems: [
-        { title: "Products", path: "/products" },
+        { title: "Products", path: "/inventory/products" },
         { title: "Stock Levels", path: "/inventory/stock-levels" },
         { title: "Expiry Management", path: "/inventory/expiry-management" },
       ],
@@ -66,7 +66,7 @@ export default function Navbar() {
           const isDropdownActive =
             activeDropdown === index ||
             item.subItems?.some(
-              (subItem) => location.pathname === subItem.path
+              (subItem) => location.pathname === subItem.path,
             );
 
           return (

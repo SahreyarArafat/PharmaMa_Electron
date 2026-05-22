@@ -143,6 +143,7 @@ export default function usePharmaMaBrandDataSearchWorker() {
   };
 
   return {
+    allBrandData: processedData,
     brandDataLoading,
     filteredBrandData,
     error,
